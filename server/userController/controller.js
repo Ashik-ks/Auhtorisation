@@ -53,50 +53,19 @@ exports.Adduser = async function (req,res){
     }
 }
 
-exports.Getuser = async function (req,res){
+exports.GetAlluser = async function (req,res){
     try {
 
-    
+        let users_Data = await users.find();
 
-        let email = req.body.email;
-        console.log("email : ",email);
-
-        // let password = req.body.password;
-        // console.log("password : ",password);
-
-        let user = await users.findOne({email});
-        console.log("user : ",user);
-
-        if(user) {
-            let db_password = user.password;
-            console.log("db_password : ",db_password);
-
-            let passwordmatch = bcrypt.compareSync(req.body.password , db_password);
-            console.log("passwordMatch : ",passwordmatch);
-
-            if(passwordmatch){
-              let response = success_function({
-                StatusCode: 200,
-                message : "login successful",
-              }) ;
-              res.status(response.statuscode).send(response);
-              return;
-            }else{
-                let response = error_function({
-                    statuscode: 400,
-                    message : "Invalid password"
-                });
-                res.status(response.statuscode).send(response);
-                return;
-            }
-        }else{
-            let response = error_function({
-                statuscode: 400,
-                message : "User not found"
-            });
-            res.status(response.statuscode).send(response);
-                return;
+        let response = {
+            success : true,
+            statuscode : 200,
+            message : "user added succesfully",
+            data : users_Data
         }
+        res.status(response.statuscode).send(response);
+        return;
 
     } catch (error) {
         console.log("error : ",error)
