@@ -2,6 +2,10 @@ const mongoose = require('mongoose')
 const bcrypt = require('bcrypt');
 
 let user = new mongoose.Schema({
+    name: {
+        type :String,
+        // required : true,
+    },
     email: {
         type :String,
         // required : true,
@@ -9,6 +13,10 @@ let user = new mongoose.Schema({
     password: {
         type :String,
         // required : true,
+    },
+    userType : {
+        type : mongoose.Schema.Types.ObjectId,
+        ref : "userType" 
     },
    
     
