@@ -18,8 +18,11 @@ exports.login = async function (req, res) {
 
         //Validations
 
-        let user = await users.findOne({ email });
+        let user = await users.findOne({ email }).populate("userType");
         console.log("user : ", user);
+        console.log("user_types.userType.userType : ",user.userType.userType)
+
+
 
         if (user) {
 
@@ -33,10 +36,16 @@ exports.login = async function (req, res) {
 
                 let token = jwt.sign({ user_id: user._id }, process.env.PRIVATE_KEY, { expiresIn: "10d" });
                 console.log("token : ", token);
+                
+
+                response_data = {
+                    token,
+                    user_types : user.userType.userType
+                }
 
                 let response = success_function({
                     statusCode: 200,
-                    data: token,
+                    data: response_data,
                     message: "Login successful",
                 });
 
