@@ -2,7 +2,7 @@
     margin: 0;
     padding: 0;
 }
-body {
+.indexbody{
     font-family: Arial, sans-serif;
     background-color: #f4f4f4;
     display: flex;
@@ -37,4 +37,84 @@ input[type="submit"] {
 }
 input[type="submit"]:hover {
     background-color: #218838;
+}
+.adduser {
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 0;
+    background: linear-gradient(135deg, #1a1a2e, #0f3460);
+    color: #eaeaea;
+    height: 100vh;
+    /* display: flex;
+    align-items: center;
+    justify-content: center; */
+}
+
+/* Form Container Styles */
+.form-container {
+    margin: auto;
+    margin-top: 10%;
+    background: rgba(176, 195, 10, 0.1);
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+    width: 100%;
+    max-width: 400px;
+    transition: all 0.3s ease;
+}
+
+/* Form Title Styles */
+.form-container h2 {
+    text-align: center;
+    margin-bottom: 20px;
+    animation: fadeIn 0.5s;
+}
+
+/* Input and Select Styles */
+input[type="text"],
+input[type="email"],
+input[type="password"],
+select {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid #3a3a3a;
+    border-radius: 5px;
+    background: rgba(255, 255, 255, 0.1);
+    color: #eaeaea;
+    transition: background 0.3s, border-color 0.3s;
+}
+
+input:focus,
+select:focus {
+    background: rgba(255, 255, 255, 0.2);
+    border-color: #007bff;
+    outline: none;
+}
+
+/* Button Styles */
+button {
+    background-color: #007bff;
+    color: #fff;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    width: 100%;
+    transition: background 0.3s;
+    animation: fadeIn 0.5s;
+}
+
+button:hover {
+    background-color: #0056b3;
+}
+
+/* Animation Styles */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
 }

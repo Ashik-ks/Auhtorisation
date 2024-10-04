@@ -11,9 +11,11 @@ function setAccessControl(access_types) {
     }
 }
 
-router.post('/users',setAccessControl("1"),userController.Adduser);
-router.get('/users',setAccessControl("2"),userController.GetAlluser);
+router.post('/users',userController.Adduser);
+router.get('/users',setAccessControl("1"),userController.GetAlluser);
 router.get('/users/:id',setAccessControl("*"),userController.GetSingleuser);
+router.put('/users/:id',setAccessControl("*"),userController.edituser);
+router.delete('/users/:id',setAccessControl("1"),userController.Deleteuser);
 
 
 module.exports = router

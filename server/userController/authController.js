@@ -36,12 +36,17 @@ exports.login = async function (req, res) {
 
                 let token = jwt.sign({ user_id: user._id }, process.env.PRIVATE_KEY, { expiresIn: "10d" });
                 console.log("token : ", token);
+
+                let token_id = user._id;
+                console.log("token_id : ",token_id);
                 
 
                 response_data = {
                     token,
-                    user_types : user.userType.userType
+                    user_types : user.userType.userType,
+                    token_id : token_id
                 }
+                console.log("response_data : ",response_data)
 
                 let response = success_function({
                     statusCode: 200,
