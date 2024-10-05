@@ -1,4 +1,4 @@
-let localstoragedata = '';
+// let localstoragedata = '';
 async function login(event){
     event.preventDefault();
     let email = document.getElementById('email').value;
@@ -34,12 +34,14 @@ async function login(event){
         let id = parsed_response.data. token_id;
         console.log("id : ",id)
 
-        localStorage.setItem(localstoragedata, token_data); 
+        let tokenkey = id;
+
+        localStorage.setItem(tokenkey, token_data); 
         console.log("Token stored successfully.");
 
         if (parsed_response.data.user_types === 'Admin') {
             alert("Admin login Successfull");
-            window.location.href = `admin.html`
+            window.location.href = `admin.html?id=${tokenkey}`
             return;
         } else if(parsed_response.data.user_types === 'Employee') {
             alert("Employee login Successfull");
@@ -115,14 +117,25 @@ async function AddUser(event){
 
 async function getusers() {
 
-    let getstoragedata = localStorage.getItem(localstoragedata);
-    console.log("getstoragedata:", getstoragedata);
+    let location = window.location;
+    console.log("location", location);
+
+    let querystring = location.search;
+    console.log("querystring", querystring);
+
+    let urlParams = new URLSearchParams(querystring);
+    console.log("url", urlParams);
+
+    let tokenkey = urlParams.get('id');
+
+
+    let token = localStorage.getItem(tokenkey)
     
     let response = await fetch('/users',{
         method: 'GET',
         headers: {
             'Content-Type': "application/json",
-            'Authorization' : `Bearer ${getstoragedata}`
+            'Authorization' : `Bearer ${token}`
         },
     })
 
@@ -141,7 +154,7 @@ async function getusers() {
           <div class="container lh-lg pb-3  shadow-none p-3 mb-5 rounded-pill" style="background-color: rgb(248, 68, 100);"
     >
     <div class="row d-flex justify-content-center align-items-center">
-        <div class="col text-center" onclick="handleClick('${id}')"><img src="${data[i].image}" class="adminDatacontainerimg"></div>
+        <div class="col text-center" onclick="handleClick('${id}','${tokenkey}')"><img src="${data[i].image}" class="adminDatacontainerimg"></div>
         <div class="col text-center text-light" style="font-size: 18px; font-weight: 700;">
             ${data[i].name}
         </div>
@@ -172,18 +185,21 @@ async function UserSingleData() {
     let urlParams = new URLSearchParams(querystring);
     console.log("url", urlParams);
 
-    let getstoragedata = localStorage.getItem(localstoragedata);
-    console.log("getstoragedata:", getstoragedata);
-
     let id = urlParams.get("id");
     console.log("id ", id, typeof (id));
+
+    let tokenkey = urlParams.get('loginid');
+    console.log("tokenkey : ",tokenkey);
+
+    let token = localStorage.getItem(tokenkey);
+    console.log("token:", token);
 
     try {
         let response = await fetch(`/users/${id}`,{
             method: 'GET',
             headers: {
                 'Content-Type': "application/json",
-                'Authorization' : `Bearer ${getstoragedata}`
+                'Authorization' : `Bearer ${token}`
             },
         });
         console.log("response : ", response);
@@ -223,8 +239,8 @@ async function UserSingleData() {
     }
 }
 
-function handleClick(id) {
-    window.location.href = `userSingleView.html?id=${id}`
+function handleClick(id,tokenkey) {
+    window.location.href = `userSingleView.html?id=${id}&loginid=${tokenkey}`
 }
 
 async function employeesingle() {
@@ -241,7 +257,7 @@ async function employeesingle() {
     let id = urlParams.get("id");
     console.log("id ", id, typeof (id));
 
-    let getstoragedata = localStorage.getItem(localstoragedata);
+    let getstoragedata = localStorage.getItem(id);
     console.log("getstoragedata:", getstoragedata);
 
     try {
@@ -303,7 +319,7 @@ async function currentdata() {
     let id = params.get('id')
     console.log("id from update data", id);
 
-    let getstoragedata = localStorage.getItem(localstoragedata);
+    let getstoragedata = localStorage.getItem(id);
     console.log("getstoragedata:", getstoragedata);
 
     let name = document.getElementById('name');
@@ -375,6 +391,8 @@ async function currentdata() {
 async function updateUser(event) {
     event.preventDefault()
 
+    
+
     let name = document.getElementById('name').value;
     let email = document.getElementById('email').value;
     let userType = document.getElementById('userType').value 
@@ -388,14 +406,14 @@ async function updateUser(event) {
     let Str_UpdateData = JSON.stringify(UpdateDatas);
     console.log("Str_UpdateData", Str_UpdateData);
 
-    let getstoragedata = localStorage.getItem(localstoragedata);
-    console.log("getstoragedata:", getstoragedata);
-
     let params = new URLSearchParams(window.location.search);
     console.log("params", params);
 
     let id = params.get('id')
     console.log("id from update data", id);
+
+    let getstoragedata = localStorage.getItem(id);
+    console.log("getstoragedata:", getstoragedata);
 
 
     try {
@@ -411,7 +429,7 @@ async function updateUser(event) {
         let parsed_Update_response = await Update_response.json();
         console.log('parsed_Update_response', parsed_Update_response);
 
-        window.location.href = `admin.html?id=${id}`
+        window.location.href = `admin.html`
 
         if (parsed_Update_response) {
             alert("Data Updated Successfully")
@@ -473,14 +491,14 @@ async function updateEmployee(event) {
     let Str_UpdateData = JSON.stringify(UpdateDatas);
     console.log("Str_UpdateData", Str_UpdateData);
 
-    let getstoragedata = localStorage.getItem(localstoragedata);
-    console.log("getstoragedata:", getstoragedata);
-
     let params = new URLSearchParams(window.location.search);
     console.log("params", params);
 
     let id = params.get('id')
     console.log("id from update data", id);
+
+    let getstoragedata = localStorage.getItem(id);
+    console.log("getstoragedata:", getstoragedata);
 
 
     try {

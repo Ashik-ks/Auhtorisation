@@ -108,6 +108,19 @@ button {
 button:hover {
     background-color: #0056b3;
 }
+.profileimg{
+    width: 30px;
+}
+
+
+
+
+
+
+
+
+
+
 
 /* Animation Styles */
 @keyframes fadeIn {
