@@ -10,7 +10,9 @@ mongoConnect();
 
 app.use(express.static('../client'))
 app.use(express.json())
+app.use('/uploads',express.static("./uploads"));
 app.use(express.urlencoded({extended: true }));
+app.use(express.json({ limit: "7mb" }));
 app.use(router)
 app.use(authrouter)
 

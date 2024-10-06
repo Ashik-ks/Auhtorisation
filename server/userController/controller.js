@@ -2,6 +2,9 @@ let users = require('../db/model/model');
 const { success_function, error_function } = require('../utils/responsehandler');
 const bcrypt = require('bcrypt')
 const userType = require('../db/model/userTypes')
+const fileUpload = require('../utils/file-upload').fileUpload;
+const fileDelete = require('../utils/file-delete').fileDelete;
+const path = require('path');
 
 exports.Adduser = async function (req, res) {
     try {
@@ -36,6 +39,15 @@ exports.Adduser = async function (req, res) {
 
         body.password = hashedpassword;
         console.log("body.password : ", body.password)
+
+        let image = body.image;
+        console.log("image : ", image)
+
+        if (image) {
+            let img_path = await fileUpload(image, "movie");
+            console.log("img_path", img_path);
+            body.image = img_path
+        }
 
         let Add_user = await users.create(body);
         console.log("Add_user : ", Add_user)
@@ -139,10 +151,33 @@ exports.edituser = async function (req, res) {
         }
 
         body.userType = userType_id;
+
+        let splittedImg;
+
+        if (body.image) {
+
+            let image_path = await users.findOne({ _id });
+
+            splittedImg = image_path.image.split('/')[2];
+            console.log("splittedIMG : ", splittedImg);
+
+            let image = body.image;
+            console.log("image :", image);
+
+            let img_path = await fileUpload(image, "movie");
+            console.log("img_path", img_path);
+            body.image = img_path
+
+        }
         
 
         let Update_user = await users.updateOne({ _id }, { $set: body })
         console.log("Update_user : ", Update_user);
+
+        if(body.image){
+            const imagePath = path.join('./uploads', 'movie', splittedImg);
+            fileDelete(imagePath);
+        }
 
         let response = success_function({
             success: true,

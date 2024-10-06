@@ -20,7 +20,7 @@ exports.login = async function (req, res) {
 
         let user = await users.findOne({ email }).populate("userType");
         console.log("user : ", user);
-        console.log("user_types.userType.userType : ",user.userType.userType)
+        console.log("user_types.userType.userType : ", user.userType.userType)
 
 
 
@@ -38,15 +38,15 @@ exports.login = async function (req, res) {
                 console.log("token : ", token);
 
                 let token_id = user._id;
-                console.log("token_id : ",token_id);
-                
+                console.log("token_id : ", token_id);
+
 
                 response_data = {
                     token,
-                    user_types : user.userType.userType,
-                    token_id : token_id
+                    user_types: user.userType.userType,
+                    token_id: token_id
                 }
-                console.log("response_data : ",response_data)
+                console.log("response_data : ", response_data)
 
                 let response = success_function({
                     statusCode: 200,
@@ -90,3 +90,68 @@ exports.login = async function (req, res) {
         return;
     }
 }
+
+exports.passwordreset = async function (req, res) {
+    try {
+        let email = req.body.email;
+        console.log("email : ", email);
+
+        let _id = req.params.id;
+        let user = await users.findOne({ _id });
+
+        if (!user) {
+            return res.status(404).send({
+                success: false,
+                statuscode: 404,
+                message: "User not found",
+            });
+        }
+
+        console.log("user : ", user);
+
+        if (email !== user.email) {
+            return res.status(400).send({
+                success: false,
+                statuscode: 400,
+                message: "Email does not match",
+            });
+        }
+
+        // Compare the provided password with the hashed password
+        const passwordMatch = await bcrypt.compare(req.body.password, user.password);
+        console.log("passwordmatch : ", passwordMatch);
+
+        if (passwordMatch) {
+            // Hash the new password
+            const hashedNewPassword = await bcrypt.hash(req.body.newpassword, 10);
+            console.log("hashednewpassword : ", hashedNewPassword);
+
+            // Update the user with the new password
+            let updateUser = await users.updateOne({ _id }, { $set: { password: hashedNewPassword } });
+            console.log("Update_user : ", updateUser);
+
+            let response = {
+                success: true,
+                statuscode: 200,
+                message: "User updated successfully",
+                data: updateUser,
+            };
+
+            return res.status(response.statuscode).send(response);
+        } else {
+            return res.status(400).send({
+                success: false,
+                statuscode: 400,
+                message: "Invalid password",
+            });
+        }
+    } catch (error) {
+        console.log("error : ", error);
+        let response = {
+            success: false,
+            statuscode: 500,
+            message: "User updation failed",
+        };
+        res.status(response.statuscode).send(response);
+    }
+};

@@ -20,26 +20,44 @@
     </nav>
     </div>
     
-    <div class="form-container">
+    <div class="form-container1">
         <h2>User Form</h2>
         <form id="userForm" onsubmit="AddUser(event)">
-            <label for="name">Name:</label>
-            <input type="text" id="name" name="name" required>
+            <div class="mb-3">
+                <label for="name">Name:</label>
+                <input type="text" id="name" name="name" class="form-control" required>
+            </div>
 
-            <label for="email">Email:</label>
-            <input type="email" id="email" name="email" required>
+            <div class="mb-3">
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" class="form-control adduseremail" required>
+            </div>
 
-            <label for="password">Password:</label>
-            <input type="password" id="password" name="password" required>
+            <div class="mb-3">
+                <label for="password">Password:</label>
+                <input type="password" id="password" name="password" class="form-control" required>
+            </div>
 
-            <label for="userType">User Type:</label>
-            <select id="userType" name="userType" required>
-                <option value="">Select user type</option>
-                <option value="Admin" class="text-dark">Admin</option>
-                <option value="Employee" class="text-dark">Employee</option>
-            </select>
+            <div class="mb-3">
+                <label for="image">Image:</label>
+                <input type="file" id="image" name="image" class="form-control" required>
+            </div>
 
-            <button type="submit">Submit</button>
+            <div class="mb-3">
+                <label for="joiningdate">Joining Date:</label>
+                <input type="text" id="joiningdate" name="joiningdate" class="form-control" required>
+            </div>
+
+            <div class="mb-3">
+                <label for="userType">User Type:</label>
+                <select id="userType" name="userType" class="form-control" required>
+                    <option value="">Select user type</option>
+                    <option value="Admin">Admin</option>
+                    <option value="Employee">Employee</option>
+                </select>
+            </div>
+
+            <button type="submit" class="adduserbtn mt-2">Submit</button>
         </form>
     </div>
 

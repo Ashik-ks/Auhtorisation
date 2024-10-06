@@ -2,59 +2,213 @@
     margin: 0;
     padding: 0;
 }
-.indexbody{
-    font-family: Arial, sans-serif;
-    background-color: #f4f4f4;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-}
-.login-container {
-    background-color: white;
-    padding: 20px;
-    border-radius: 5px;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-}
-h2 {
-    margin-bottom: 20px;
-}
-input[type="text"],
-input[type="password"] {
-    width: 100%;
-    padding: 10px;
-    margin: 10px 0;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-}
-input[type="submit"] {
-    background-color: #28a745;
+body.indexbody {
+    background: linear-gradient(to right, #e9c5e9, #d685df);
     color: white;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.loginbtn{
+    background-color: #d685df; 
     border: none;
-    padding: 10px;
-    border-radius: 5px;
+    padding: 3px 6px 5px 6px;
+    color: white;
+    border-radius: 3px;
+    font-size: 17px;
+    font-weight: 500;
+}
+#square {
+    position: relative;
+      width: 800px;
+      height: 450px;
+    display: block;
+    margin: auto;
+      background: #F3F6F8;
+    z-index: 3;
+  }
+      
+  #leftSquare {
+      width: 40%;
+    display: block;
+    margin:  auto;
+      height: 100%;
+    position: absolute;
+    top: 0%;
+    left: 0%;
+      background:linear-gradient(
+        rgba(251, 139, 166, 0.70),
+        rgba(224, 140, 194, 0.8),
+        rgba(194,139,228, 0.9)
+      ),  url("https://images.pexels.com/photos/1852/dawn-landscape-mountains-nature.jpg?h=350&auto=compress");
+    background-size: cover;
+    border-radius: 0%;
+    z-index: 1;
+  }
+  
+  #rightSquare {
+      width: 60%;
+    display: block;
+    margin:  auto;
+      height: 100%;
+    position: absolute;
+    top: 0%;
+    right: 0%;
+      background:none;
+    background-size: cover;
+    border-radius: 0%;
+    z-index: 1;
+  }
+  
+  #circle{
+      border-radius: 50%;
+      width: 60%;
+      height: 40%;
+      display: block;
+      margin: auto;
+      position: absolute;
+      top: 8%;
+      right: 20%;
+    }
+  
+  .brand{
+    position: absolute;
+    display: block;
+    top: 38%;
+    left: 25%;
+    margin: auto;
+    width: 50%;
+    height: 60%;
+    z-index: 1;
+    
+  }
+  #passwordlogin,#emaillogin{
+    width: 85%;
+    margin: auto;
+  }
+  
+  #title{
+    position: absolute;
+    left: 21%;
+    bottom: 37%;
+    color: white;
+    font-family:"lato";
+    font-size: 20px;
+    font-weight: 800;
+    text-align: center;
+    z-index: 3;
+  }
+  #subtitle{
+    position: absolute;
+    left: 7%;
+    bottom: 32%;
+    color: white;
+    font-family:"lato";
+    font-size: 13px;
+    font-weight: 400;
+    text-align: center;
+    z-index: 3;
+  }
+  
+  #container{
+    
+      margin-top: 15%;
+  }
+  
+  .signup{
+    color: rgb(228, 162, 208);
+    font-family:"lato";
+    font-size: 2em;
+    font-weight: 800;
+    text-align: center;
+    text-transform: uppercase;
+    z-index: 3;
+  }
+  
+  .button{
+    display: block;
+    margin: auto;
+    margin-bottom: 20px;
+    z-index: 3;
+    background: #2BA0EE;
+  }
+  
+  #twitter{
+    
+    padding-left: 10px;
+  }
+  
+  #footer{
+    display: block;
+    margin: auto;
+    color: #333333;
+    font-family:"lato";
+    font-size: 15px;
+    font-weight: 400;
+    text-align: center;
+    z-index: 3;
+  }
+  
+  #terms{
     cursor: pointer;
-}
-input[type="submit"]:hover {
-    background-color: #218838;
-}
+    color: #FBADC1;
+  }
+  
+  
+  form{
+    
+    padding: 20px 0;
+    position: relative;
+  }
+  
+  .optin{
+    
+     -webkit-appearance: none;
+       -moz-appearance: none;
+            appearance: none;
+    outline: 0;
+    border: 1px solid rgba(255, 255, 255, 0.8);
+    background-color: rgba(255, 255, 255, 0.8);
+    width: 75%;
+    margin: auto;
+    display: block;
+    margin-bottom: 10px;
+    border-radius: 3px;
+    padding: 10px 15px;
+    text-align: left;
+    font-size: 18px;
+    color: #333333;
+    -webkit-transition-duration: 0.25s;
+            transition-duration: 0.25s;
+    font-weight: 300;    
+  }
+  .optin:hover{
+      background-color: rgba(255, 255, 255, 0.4);
+  }
+  .optin:focus {
+    background-color: white;
+    width: 90%;
+    color: #CD98E3;
+  }
 .adduser {
     font-family: 'Arial', sans-serif;
     margin: 0;
     padding: 0;
-    background: linear-gradient(135deg, #1a1a2e, #0f3460);
+    background: linear-gradient(to right, #e9c5e9, #d685df);
     color: #eaeaea;
     height: 100vh;
-    /* display: flex;
-    align-items: center;
-    justify-content: center; */
+}
+#userForm{
+    display: flex;
+    flex-direction: column;
 }
 
-/* Form Container Styles */
-.form-container {
+.form-container1 {
     margin: auto;
-    margin-top: 10%;
-    background: rgba(176, 195, 10, 0.1);
+    margin-top: 6%;
+    background: linear-gradient(to right, #fafafa, #e4d1e6);
+    color: black;
     padding: 30px;
     border-radius: 10px;
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
@@ -63,53 +217,91 @@ input[type="submit"]:hover {
     transition: all 0.3s ease;
 }
 
-/* Form Title Styles */
-.form-container h2 {
+.form-container1 h2 {
     text-align: center;
     margin-bottom: 20px;
     animation: fadeIn 0.5s;
 }
-
-/* Input and Select Styles */
-input[type="text"],
-input[type="email"],
-input[type="password"],
-select {
-    width: 100%;
-    padding: 10px;
-    margin: 10px 0;
-    border: 1px solid #3a3a3a;
-    border-radius: 5px;
-    background: rgba(255, 255, 255, 0.1);
-    color: #eaeaea;
-    transition: background 0.3s, border-color 0.3s;
-}
-
-input:focus,
-select:focus {
-    background: rgba(255, 255, 255, 0.2);
-    border-color: #007bff;
-    outline: none;
-}
-
-/* Button Styles */
-button {
-    background-color: #007bff;
-    color: #fff;
-    padding: 10px;
+.adduserbtn,.adminupdatebtn,.employeeupdatebtn,.editbtn{
+    width: 25%;
+    background-color: #d685df; 
     border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    width: 100%;
-    transition: background 0.3s;
-    animation: fadeIn 0.5s;
+    padding: 3px 6px 5px 6px;
+    color: white;
+    border-radius: 3px;
+    font-size: 17px;
+    font-weight: 500;
+}
+.editbtn{
+    width: 25%;
+    background-color: #d685df; 
+    border: none;
+    padding: 3px 3px 3px 3px;
+    color: white;
+    border-radius: 3px;
+    font-size: 17px;
+    font-weight: 500;
+}
+.editbtn1{
+  width: 25%;
+    background-color: #d685df; 
+    border: none;
+    padding: 2px;
+    color: white;
+    border-radius: 3px;
+    font-size: 14px;
+    font-weight: 500;
 }
 
-button:hover {
-    background-color: #0056b3;
+.editbtn2{
+  width: 32%;
+    background-color: #d685df; 
+    border: none;
+    padding: 2px;
+    color: white;
+    border-radius: 3px;
+    font-size: 14px;
+    font-weight: 500;
 }
+
 .profileimg{
     width: 30px;
+}
+.adminDatacontainerimg{
+    width: 60px;
+}
+.singleemployeecontainer{
+  width: 50px;
+}
+.singleemployeecontainerimg{
+  width: 200px;
+}
+.singleusercontainerimg{
+  width: 200px;
+}
+.www {
+  animation: fadeIn 1s ease-in-out;
+}
+#resetform{
+  display: none;
+  width: 75%;
+  margin-left: 8%;
+}
+
+@keyframes fadeIn {
+  from {
+      opacity: 0;
+      transform: translateY(20px);
+  }
+  to {
+      opacity: 1;
+      transform: translateY(0);
+  }
+}
+
+.singleusercontainerimg {
+  border-radius: 50%; /* Optional: Makes the image circular */
+  transition: transform 0.3s ease;
 }
 
 

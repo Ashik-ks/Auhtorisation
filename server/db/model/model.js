@@ -14,6 +14,14 @@ let user = new mongoose.Schema({
         type :String,
         // required : true,
     },
+    image: {
+        type :String,
+        // required : true,
+    },
+    joiningdate: {
+        type :String,
+        // required : true,
+    },
     userType : {
         type : mongoose.Schema.Types.ObjectId,
         ref : "userType" 
