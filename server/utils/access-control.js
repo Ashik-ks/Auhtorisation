@@ -50,6 +50,9 @@ exports.accessControl = async function (access_types,req,res,next) {
                         let user_id = decoded.user_id;
                         console.log("user_id : ",user_id);
 
+                        req.params = user_id;
+                        console.log("req.params : ",req.params)
+
                         let user = await login.findOne({_id : user_id}).populate("userType");
                         console.log("user : ",user);
 

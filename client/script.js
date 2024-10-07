@@ -777,7 +777,7 @@ async function passwordreset(event){
     let strDatas = JSON.stringify(datas);
 
     try {
-        let resetResponse = await fetch(`/passwordreset/${id}`, {
+        let resetResponse = await fetch(`/passwordreset`, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json',

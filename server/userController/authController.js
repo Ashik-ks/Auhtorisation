@@ -93,10 +93,13 @@ exports.login = async function (req, res) {
 
 exports.passwordreset = async function (req, res) {
     try {
+
+        
         let email = req.body.email;
         console.log("email : ", email);
 
-        let _id = req.params.id;
+        let _id = req.params;
+        console.log("_id")
         let user = await users.findOne({ _id });
 
         if (!user) {
