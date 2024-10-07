@@ -112,15 +112,8 @@ exports.passwordreset = async function (req, res) {
 
         console.log("user : ", user);
 
-        if (email !== user.email) {
-            return res.status(400).send({
-                success: false,
-                statuscode: 400,
-                message: "Email does not match",
-            });
-        }
-
-        // Compare the provided password with the hashed password
+        if (user) {
+            // Compare the provided password with the hashed password
         const passwordMatch = await bcrypt.compare(req.body.password, user.password);
         console.log("passwordmatch : ", passwordMatch);
 
@@ -148,6 +141,9 @@ exports.passwordreset = async function (req, res) {
                 message: "Invalid password",
             });
         }
+        }
+
+        
     } catch (error) {
         console.log("error : ", error);
         let response = {

@@ -20,30 +20,26 @@
                         <a class="nav-link text-light text-decoration-none fs-5" href="./index.html">Login Page</a>
                     </span>
                 </li>
-                <li class="nav-item ">
+                <li class="nav-item">
                     <button class="btn" type="button" data-bs-toggle="offcanvas" 
                             data-bs-target="#offcanvasRight" aria-controls="offcanvasRight" 
                             onclick="employeeprofile()">
                         <img src="./images/icons8-female-profile-50.png" alt="User Profile" class="profileimg">
                     </button>
                     
-                    <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRight" 
+                    <div class="offcanvas offcanvas-end " tabindex="-1" id="offcanvasRight" 
                          aria-labelledby="offcanvasRightLabel">
                         <div class="offcanvas-header">
                             <h5 id="offcanvasRightLabel" class="fs-5 fw-bold text-dark text-decoration-underline mt-3 ms-4">Your Profile</h5>
                             <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" 
                                     aria-label="Close"></button>
                         </div>
-                        <div class="offcanvas-body" id="offcanvasbody ">
+                        <div class="offcanvas-body position-relative" id="offcanvasbody">
                             <div id="container" class="">
                                
                             </div>
                             <form onsubmit="passwordreset(event)" id="resetform">
-                                <div class="mb-3 text-dark">
-                                    <label for="email">Email:</label>
-                                    <input type="email" id="resetemail" name="email" class="form-control" placeholder="Enter your Email" required>
-                                </div>
-                        
+
                                 <div class="mb-3 text-dark">
                                     <label for="password">Current Password:</label>
                                     <input type="password" id="resetpassword" name="password" class="form-control" placeholder="Enter Current password" required>
@@ -55,7 +51,16 @@
                                 </div>
                                 <button type="submit" class="editbtn mt-2">Submit</button>
                             </form>
+                            <button onclick="logoutalert()" class="logout-link text-decoration-underline ms-4 mt-3 mb-3">Logout</button>
+                            <div id="logoutdiv">
+                                <div class="text-danger ms-4 fs-6 ">Are you sure you need to logout</div>
+                                <div class="d-flex gap-3 ms-4 ">
+                                    <span class="text-danger spanbody" onclick="logout()">Yes</span>
+                                <span class="text-danger spanbody" onclick="nologout()">No</span>
+                                </div>
+                            </div>
                         </div>
+                        
                     </div>
                 </li>
             </ul>

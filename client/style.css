@@ -304,6 +304,24 @@ body.indexbody {
   transition: transform 0.3s ease;
 }
 
+.logout-link {
+  color: rgb(216, 16, 16);
+ border: none;
+ background-color: transparent;
+}
+#logoutdiv{
+  display: none;
+  background: linear-gradient(to right,#e4d1e6, #fafafa);
+}
+.spanbody{
+padding: 3px;
+}
+
+/* .blur {
+  filter: blur(3px);
+  transition: filter 0.3s ease;
+} */
+
 
 
 

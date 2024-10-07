@@ -41,7 +41,7 @@ async function login(event){
 
         if (parsed_response.data.user_types === 'Admin') {
             alert("Admin login Successfull");
-            window.location.href = `admin.html?login=${tokenkey}`
+            window.location.href = `admin.html?id=${id}&login=${tokenkey}`
             return;
         } else if(parsed_response.data.user_types === 'Employee') {
             alert("Employee login Successfull");
@@ -67,6 +67,9 @@ async function getusers() {
 
     let urlParams = new URLSearchParams(querystring);
     console.log("url", urlParams);
+
+    let id = urlParams.get("id");
+    console.log("id ", id, typeof (id));
 
     let tokenkey = urlParams.get('login');
     console.log("tokenkey : ",tokenkey)
@@ -121,22 +124,6 @@ async function getusers() {
 
     admindatacontainer.innerHTML = rows;
 
-}
-
-function passtoken() {
-    let location = window.location;
-    console.log("location", location);
-
-    let querystring = location.search;
-    console.log("querystring", querystring);
-
-    let urlParams = new URLSearchParams(querystring);
-    console.log("url", urlParams);
-
-    let tokenkey = urlParams.get('login');
-    console.log("tokenkey : ",tokenkey)
-
-    window.location.href = `adduser.html?login=${tokenkey}`
 }
 
 async function AddUser(event){
@@ -322,7 +309,7 @@ async function employeesingle() {
     let id = urlParams.get("id");
     console.log("id ", id, typeof (id));
 
-    let tokenkey = urlParams.get("login");
+    let tokenkey = urlParams.get('login');
     console.log("tokenkey ", tokenkey, typeof (tokenkey));
 
     let token = localStorage.getItem(tokenkey);
@@ -692,7 +679,7 @@ async function employeeprofile() {
         <div class="ms-3 text-dark fs-5 fw-bold mb-2">${data[i].name}</div>
         <div class="ms-3 text-dark fs-5 fw-bold mb-2">${data[i].email}</div>
         <button class=" ms-4 mt-2 editbtn1" onclick="handleClickEdit1('${id}','${tokenkey}')">Edit Settings</button>
-        <button class=" ms-4 mt-2 editbtn2" onclick="handleClickreset('${id}','${tokenkey}')">Password reset</button>
+        <button class=" ms-4 mt-3 editbtn2" onclick="handleClickreset('${id}','${tokenkey}')">Password reset</button>
 </div>
 </div>
                 `;
@@ -704,6 +691,61 @@ async function employeeprofile() {
             console.log("error : ", error);
         }
 }
+
+// async function adminprofile() {
+
+//     let params = new URLSearchParams(window.location.search);
+//         console.log("params", params);
+    
+//         let id = params.get('id')
+//         console.log("id from update data", id);
+    
+//         let tokenkey = params.get('login')
+//         console.log("tokenkey", tokenkey);
+    
+//         let token = localStorage.getItem(tokenkey);
+//         console.log("token:", token);
+    
+//         try {
+//             let response = await fetch(`/users/${id}`,{
+//                 method: 'GET',
+//                 headers: {
+//                     'Content-Type': "application/json",
+//                     'Authorization' : `Bearer ${token}`
+//                 },
+//             });
+//             console.log("response : ", response);
+    
+//             let parsed_response = await response.json();
+//             console.log("parsed_response : ", parsed_response);
+    
+//             let data = parsed_response.data;
+//             console.log("data : ", data);
+        
+//             let rows = ''; 
+    
+//             for (let i = 0; i < data.length; i++) {
+//                 console.log(data[i]);
+    
+//                 rows += `
+//     <div class="container ">
+//     <div class="row d-flex flex-column ">
+//         <img src="${data[i].image}" class="singleemployeecontainerimg mb-2"> 
+//         <div class="ms-3 text-dark fs-5 fw-bold mb-2">${data[i].name}</div>
+//         <div class="ms-3 text-dark fs-5 fw-bold mb-2">${data[i].email}</div>
+//         <button class=" ms-4 mt-2 editbtn1" onclick="handleClickEdit1('${id}','${tokenkey}')">Edit Settings</button>
+//         <button class=" ms-4 mt-2 editbtn2" onclick="handleClickreset('${id}','${tokenkey}')">Password reset</button>
+// </div>
+// </div>
+//                 `;
+//             }
+            
+//             document.getElementById('container').innerHTML = rows;
+    
+//         } catch (error) {
+//             console.log("error : ", error);
+//         }
+// }
 
 async function handleClickDelete(id,tokenkey) {
 
@@ -738,6 +780,7 @@ async function handleClickDelete(id,tokenkey) {
     }
 }
 
+//To reset password
 function handleClickreset(){
 
     let resetform = document.getElementById('resetform');
@@ -764,12 +807,10 @@ async function passwordreset(event){
     let token = localStorage.getItem(tokenkey);
     console.log("resettoken:", token);
 
-    let email = document.getElementById('resetemail').value;
     let password = document.getElementById('resetpassword').value;
     let newpassword = document.getElementById('newpassword').value;
 
     let datas = {
-        email,
         password,
         newpassword
     }
@@ -789,7 +830,8 @@ async function passwordreset(event){
         let parsed_resetResponse = await resetResponse.json();
         console.log('parsed_resetResponse', parsed_resetResponse);
 
-        window.location.href = `employee.html?id=${id}&login=${tokenkey}`
+        window.location.href = window.location.href;
+
 
         if (parsed_resetResponse) {
             alert("Password reset Successfully")
@@ -799,5 +841,96 @@ async function passwordreset(event){
         console.log("error", error);
     }
 
+}
+
+//to pass token key
+function passtoken() {
+    let location = window.location;
+    console.log("location", location);
+
+    let querystring = location.search;
+    console.log("querystring", querystring);
+
+    let urlParams = new URLSearchParams(querystring);
+    console.log("url", urlParams);
+
+    let tokenkey = urlParams.get('login');
+    console.log("tokenkey : ",tokenkey)
+
+    window.location.href = `adduser.html?login=${tokenkey}`
+}
+
+function passtoken1() {
+    let location = window.location;
+    console.log("location", location);
+
+    let querystring = location.search;
+    console.log("querystring", querystring);
+
+    let urlParams = new URLSearchParams(querystring);
+    console.log("url", urlParams);
+
+    let tokenkey = urlParams.get('loginid');
+    console.log("tokenkeysingle : ",tokenkey)
+
+    let id = urlParams.get('id');
+    console.log("singleid : ",id)
+
+    window.location.href = `admin.html?login=${tokenkey}&id=${id}`
+}
+
+function passtoken2() {
+    let location = window.location;
+    console.log("location", location);
+
+    let querystring = location.search;
+    console.log("querystring", querystring);
+
+    let urlParams = new URLSearchParams(querystring);
+    console.log("url", urlParams);
+
+    let tokenkey = urlParams.get('login');
+    console.log("tokenkeysingle : ",tokenkey)
+
+    let id = urlParams.get('id');
+    console.log("singleid : ",id)
+
+    window.location.href = `admin.html?login=${tokenkey}&id=${id}`
+}
+
+//To logout
+function logoutalert() {
+    let logoutdiv = document.getElementById('logoutdiv');
+    let offcanvasbody = document.getElementById('offcanvasbody');
+
+    if (logoutdiv.style.display === 'none' || logoutdiv.style.display === '') {
+        logoutdiv.style.display = 'block';
+        offcanvasbody.classList.add('blur'); 
+
+        logoutdiv.querySelector('input, button').focus();
+    } else {
+        logoutdiv.style.display = 'none'; 
+        offcanvasbody.classList.remove('blur'); 
+    }
+}
+function logout() {
+
+    let location = window.location;
+    console.log("location", location);
+
+    let querystring = location.search;
+    console.log("querystring", querystring);
+
+    let urlParams = new URLSearchParams(querystring);
+    console.log("url", urlParams);
+
+    let tokenkey = urlParams.get('login');
+    console.log("tokenkey : ",tokenkey)
+
+    localStorage.removeItem(tokenkey);
+    window.location.href = `index.html` 
+}
+function nologout() {
+    window.location = window.location.href;
 }
 
