@@ -929,7 +929,7 @@ function logout() {
 
     localStorage.removeItem(tokenkey);
     console.log("keys in localstorage : ",Object.keys(localStorage))
-    // window.location.href = `index.html` 
+    window.location.href = `index.html` 
 }
 function nologout() {
     window.location = window.location.href;

@@ -5,6 +5,9 @@ const userType = require('../db/model/userTypes')
 const fileUpload = require('../utils/file-upload').fileUpload;
 const fileDelete = require('../utils/file-delete').fileDelete;
 const path = require('path');
+const set_password_template =
+  require("../utils/email-templates/set-password").resetPassword;
+  const sendEmail = require("../utils/send-email").sendEmail;
 
 exports.Adduser = async function (req, res) {
     try {
@@ -15,40 +18,40 @@ exports.Adduser = async function (req, res) {
         body.userType = user_Type._id
 
 
-        // function generateRandomNumber(length) {
-        //     var charset = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()";
-        //     var password = "";
+        function generateRandomNumber(length) {
+            var charset = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+            var password = "";
           
-        //     for (var i = 0; i < length; i++) {
-        //       var randomIndex = Math.floor(Math.random() * charset.length);
-        //       password += charset.charAt(randomIndex);
-        //     }
+            for (var i = 0; i < length; i++) {
+              var randomIndex = Math.floor(Math.random() * charset.length);
+              password += charset.charAt(randomIndex);
+            }
           
-        //     return password;
-        //   }
+            return password;
+          }
           
-        //   var numberLength = 10; // Set the desired password length here
-        //   var randomNumber = generateRandomNumber(numberLength);
-        //   console.log(randomNumber);
+          var numberLength = 10; // Set the desired password length here
+          var randomNumber = generateRandomNumber(numberLength);
+          console.log(randomNumber);
 
-          
+          let email_template = await set_password_template(body.name,body.email,randomNumber)
+          await sendEmail(body.email,"User created",email_template)
 
+        let salt = bcrypt.genSaltSync(10);
+        console.log("salt : ", salt);
 
-        // let salt = bcrypt.genSaltSync(10);
-        // console.log("salt : ", salt);
+        let hashedpassword = bcrypt.hashSync(randomNumber, salt)
+        console.log("hashedpassword : ", hashedpassword);
 
-        // let hashedpassword = bcrypt.hashSync(randomNumber, salt)
-        // console.log("hashedpassword : ", hashedpassword);
+        let newbody = {
+            email : req.body.email,
+            name : req.body.name,
+            joiningdate : req.body.joiningdate,
+            image : req.body.image,
+            userType :  req.body.userType,
+            password : hashedpassword
 
-        // let newbody = {
-        //     email : req.body.email,
-        //     name : req.body.name,
-        //     joiningdate : req.body.joiningdate,
-        //     image : req.body.image,
-        //     userType :  req.body.userType,
-        //     password : hashedpassword
-
-        // }
+        }
 
         let email = body.email;
         console.log("email : ", email)
