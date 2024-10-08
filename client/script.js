@@ -692,60 +692,60 @@ async function employeeprofile() {
         }
 }
 
-// async function adminprofile() {
+async function adminprofile() {
 
-//     let params = new URLSearchParams(window.location.search);
-//         console.log("params", params);
+    let params = new URLSearchParams(window.location.search);
+        console.log("params", params);
     
-//         let id = params.get('id')
-//         console.log("id from update data", id);
+        let id = params.get('id')
+        console.log("id from update data", id);
     
-//         let tokenkey = params.get('login')
-//         console.log("tokenkey", tokenkey);
+        let tokenkey = params.get('login')
+        console.log("tokenkey", tokenkey);
     
-//         let token = localStorage.getItem(tokenkey);
-//         console.log("token:", token);
+        let token = localStorage.getItem(tokenkey);
+        console.log("token:", token);
     
-//         try {
-//             let response = await fetch(`/users/${id}`,{
-//                 method: 'GET',
-//                 headers: {
-//                     'Content-Type': "application/json",
-//                     'Authorization' : `Bearer ${token}`
-//                 },
-//             });
-//             console.log("response : ", response);
+        try {
+            let response = await fetch(`/users/${id}`,{
+                method: 'GET',
+                headers: {
+                    'Content-Type': "application/json",
+                    'Authorization' : `Bearer ${token}`
+                },
+            });
+            console.log("response : ", response);
     
-//             let parsed_response = await response.json();
-//             console.log("parsed_response : ", parsed_response);
+            let parsed_response = await response.json();
+            console.log("parsed_response : ", parsed_response);
     
-//             let data = parsed_response.data;
-//             console.log("data : ", data);
+            let data = parsed_response.data;
+            console.log("data : ", data);
         
-//             let rows = ''; 
+            let rows = ''; 
     
-//             for (let i = 0; i < data.length; i++) {
-//                 console.log(data[i]);
+            for (let i = 0; i < data.length; i++) {
+                console.log(data[i]);
     
-//                 rows += `
-//     <div class="container ">
-//     <div class="row d-flex flex-column ">
-//         <img src="${data[i].image}" class="singleemployeecontainerimg mb-2"> 
-//         <div class="ms-3 text-dark fs-5 fw-bold mb-2">${data[i].name}</div>
-//         <div class="ms-3 text-dark fs-5 fw-bold mb-2">${data[i].email}</div>
-//         <button class=" ms-4 mt-2 editbtn1" onclick="handleClickEdit1('${id}','${tokenkey}')">Edit Settings</button>
-//         <button class=" ms-4 mt-2 editbtn2" onclick="handleClickreset('${id}','${tokenkey}')">Password reset</button>
-// </div>
-// </div>
-//                 `;
-//             }
+                rows += `
+    <div class="container ">
+    <div class="row d-flex flex-column ">
+        <img src="${data[i].image}" class="singleemployeecontainerimg mb-2"> 
+        <div class="ms-3 text-dark fs-5 fw-bold mb-2">${data[i].name}</div>
+        <div class="ms-3 text-dark fs-5 fw-bold mb-2">${data[i].email}</div>
+        <button class=" ms-4 mt-2 editbtn1" onclick="handleClickEdit1('${id}','${tokenkey}')">Edit Settings</button>
+        <button class=" ms-4 mt-2 editbtn2" onclick="handleClickreset('${id}','${tokenkey}')">Password reset</button>
+</div>
+</div>
+                `;
+            }
             
-//             document.getElementById('container').innerHTML = rows;
+            document.getElementById('container').innerHTML = rows;
     
-//         } catch (error) {
-//             console.log("error : ", error);
-//         }
-// }
+        } catch (error) {
+            console.log("error : ", error);
+        }
+}
 
 async function handleClickDelete(id,tokenkey) {
 
@@ -928,7 +928,8 @@ function logout() {
     console.log("tokenkey : ",tokenkey)
 
     localStorage.removeItem(tokenkey);
-    window.location.href = `index.html` 
+    console.log("keys in localstorage : ",Object.keys(localStorage))
+    // window.location.href = `index.html` 
 }
 function nologout() {
     window.location = window.location.href;

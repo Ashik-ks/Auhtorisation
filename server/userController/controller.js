@@ -15,12 +15,40 @@ exports.Adduser = async function (req, res) {
         body.userType = user_Type._id
 
 
+        // function generateRandomNumber(length) {
+        //     var charset = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()";
+        //     var password = "";
+          
+        //     for (var i = 0; i < length; i++) {
+        //       var randomIndex = Math.floor(Math.random() * charset.length);
+        //       password += charset.charAt(randomIndex);
+        //     }
+          
+        //     return password;
+        //   }
+          
+        //   var numberLength = 10; // Set the desired password length here
+        //   var randomNumber = generateRandomNumber(numberLength);
+        //   console.log(randomNumber);
 
-        let salt = bcrypt.genSaltSync(10);
-        console.log("salt : ", salt);
+          
 
-        let hashedpassword = bcrypt.hashSync(body.password, salt)
-        console.log("hashedpassword : ", hashedpassword);
+
+        // let salt = bcrypt.genSaltSync(10);
+        // console.log("salt : ", salt);
+
+        // let hashedpassword = bcrypt.hashSync(randomNumber, salt)
+        // console.log("hashedpassword : ", hashedpassword);
+
+        // let newbody = {
+        //     email : req.body.email,
+        //     name : req.body.name,
+        //     joiningdate : req.body.joiningdate,
+        //     image : req.body.image,
+        //     userType :  req.body.userType,
+        //     password : hashedpassword
+
+        // }
 
         let email = body.email;
         console.log("email : ", email)
@@ -37,8 +65,8 @@ exports.Adduser = async function (req, res) {
             res.status(response.statuscode).send(response);
         }
 
-        body.password = hashedpassword;
-        console.log("body.password : ", body.password)
+        // body.password = hashedpassword;
+        // console.log("body.password : ", body.password)
 
         let image = body.image;
         console.log("image : ", image)
@@ -49,7 +77,7 @@ exports.Adduser = async function (req, res) {
             body.image = img_path
         }
 
-        let Add_user = await users.create(body);
+        let Add_user = await users.create(newbody);
         console.log("Add_user : ", Add_user)
 
         let response = {
