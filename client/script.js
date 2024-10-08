@@ -1,11 +1,11 @@
 
-async function login(event){
+async function login(event) {
     event.preventDefault();
     let email = document.getElementById('emaillogin').value;
-    console.log("email : ",email);
+    console.log("email : ", email);
 
     let password = document.getElementById('passwordlogin').value;
-    console.log("password : ",password)
+    console.log("password : ", password)
 
     let Datas = {
         email,
@@ -29,28 +29,28 @@ async function login(event){
         console.log("parsed_response : ", parsed_response);
 
         let token_data = parsed_response.data.token;
-        console.log("token_data : ",token_data);
+        console.log("token_data : ", token_data);
 
-        let id = parsed_response.data. token_id;
-        console.log("id : ",id)
+        let id = parsed_response.data.token_id;
+        console.log("id : ", id)
 
         let tokenkey = id;
 
-        localStorage.setItem(tokenkey, token_data); 
+        localStorage.setItem(tokenkey, token_data);
         console.log("Token stored successfully.");
 
         if (parsed_response.data.user_types === 'Admin') {
             alert("Admin login Successfull");
             window.location.href = `admin.html?id=${id}&login=${tokenkey}`
             return;
-        } else if(parsed_response.data.user_types === 'Employee') {
+        } else if (parsed_response.data.user_types === 'Employee') {
             alert("Employee login Successfull");
             window.location.href = `employee.html?id=${id}&login=${tokenkey}`
             return;
         }
-        else{
-            alert("Something went wrong"); 
-        }        
+        else {
+            alert("Something went wrong");
+        }
 
     } catch (error) {
         console.log("error : ,error")
@@ -72,17 +72,17 @@ async function getusers() {
     console.log("id ", id, typeof (id));
 
     let tokenkey = urlParams.get('login');
-    console.log("tokenkey : ",tokenkey)
+    console.log("tokenkey : ", tokenkey)
 
 
     let token = localStorage.getItem(tokenkey)
-    console.log("token : ",token)
-    
-    let response = await fetch('/users',{
+    console.log("token : ", token)
+
+    let response = await fetch('/users', {
         method: 'GET',
         headers: {
             'Content-Type': "application/json",
-            'Authorization' : `Bearer ${token}`
+            'Authorization': `Bearer ${token}`
         },
     })
 
@@ -90,7 +90,7 @@ async function getusers() {
     console.log("parsed_response : ", parsed_response);
 
     let data = parsed_response.data;
-    console.log('data : ',data);
+    console.log('data : ', data);
 
     let admindatacontainer = document.getElementById("admindatacontainer");
     let rows = ''
@@ -126,7 +126,7 @@ async function getusers() {
 
 }
 
-async function AddUser(event){
+async function AddUser(event) {
     event.preventDefault();
 
     let image = document.getElementById('image');
@@ -165,21 +165,19 @@ async function submitData(dataUrl) {
     console.log("url", urlParams);
 
     let tokenkey = urlParams.get('login');
-    console.log("tokenkey : ",tokenkey)
+    console.log("tokenkey : ", tokenkey)
 
     let name = document.getElementById('name').value;
     let email = document.getElementById('email').value;
-    let password = document.getElementById('password').value;
-    let userType = document.getElementById('userType').value; 
+    let userType = document.getElementById('userType').value;
     let joiningdate = document.getElementById('joiningdate').value
 
     let add_data = {
         name,
         email,
-        password,
         userType,
         joiningdate,
-        image : dataUrl
+        image: dataUrl
     }
 
     let str_add_data = JSON.stringify(add_data);
@@ -188,11 +186,11 @@ async function submitData(dataUrl) {
     console.log("token:", token);
 
     try {
-        let response = await fetch('/users',{
+        let response = await fetch('/users', {
             method: 'POST',
             headers: {
                 'Content-Type': "application/json",
-                'Authorization' : `Bearer ${token}`
+                'Authorization': `Bearer ${token}`
             },
             body: str_add_data,
         })
@@ -201,23 +199,23 @@ async function submitData(dataUrl) {
         let parsed_response = await response.json();
         console.log("parsed_response : ", parsed_response);
 
-        if(parsed_response){
+        if (parsed_response) {
             alert("user added successfully");
-             window.location.href = `admin.html?login=${tokenkey}`
+            window.location.href = `admin.html?login=${tokenkey}`
             return;
-        }else{
+        } else {
             alert("user not added");
             return;
         }
 
-       
+
 
     } catch (error) {
-        console.log("error : ",error)
+        console.log("error : ", error)
     }
 }
 
-function handleClick(id,tokenkey) {
+function handleClick(id, tokenkey) {
     window.location.href = `userSingleView.html?id=${id}&loginid=${tokenkey}`
 }
 
@@ -235,17 +233,17 @@ async function UserSingleData() {
     console.log("id ", id, typeof (id));
 
     let tokenkey = urlParams.get('loginid');
-    console.log("tokenkey : ",tokenkey);
+    console.log("tokenkey : ", tokenkey);
 
     let token = localStorage.getItem(tokenkey);
     console.log("token:", token);
 
     try {
-        let response = await fetch(`/users/${id}`,{
+        let response = await fetch(`/users/${id}`, {
             method: 'GET',
             headers: {
                 'Content-Type': "application/json",
-                'Authorization' : `Bearer ${token}`
+                'Authorization': `Bearer ${token}`
             },
         });
         console.log("response : ", response);
@@ -258,7 +256,7 @@ async function UserSingleData() {
 
         let singleusercontainer = document.getElementById('singleusercontainer')
 
-        let rows = ''; 
+        let rows = '';
 
         for (let i = 0; i < data.length; i++) {
             console.log(data[i]);
@@ -287,7 +285,7 @@ async function UserSingleData() {
 </div>
             `;
         }
-        
+
         document.getElementById('singleusercontainer').innerHTML = rows;
 
     } catch (error) {
@@ -317,11 +315,11 @@ async function employeesingle() {
 
     try {
 
-        let response = await fetch(`/users/${id}`,{
+        let response = await fetch(`/users/${id}`, {
             method: 'GET',
             headers: {
                 'Content-Type': "application/json",
-                'Authorization' : `Bearer ${token}`
+                'Authorization': `Bearer ${token}`
             },
         });
         console.log("response : ", response);
@@ -365,16 +363,16 @@ async function employeesingle() {
     
             `;
         }
-        
+
         // Append all rows at once
         document.getElementById('employeedatacontainer').innerHTML = rows;
 
     } catch (error) {
-        console.log("error : ",error);
+        console.log("error : ", error);
     }
 }
 
-function handleClickEdit(id,tokenkey){
+function handleClickEdit(id, tokenkey) {
     window.location.href = `update.html?id=${id}&login=${tokenkey}`;
 }
 
@@ -397,18 +395,18 @@ async function currentdata() {
     let joiningdate = document.getElementById('joiningdate')
 
     try {
-        let form_response = await fetch(`/users/${id}`,{
+        let form_response = await fetch(`/users/${id}`, {
             method: 'GET',
             headers: {
                 'Content-Type': "application/json",
-                'Authorization' : `Bearer ${token}`
+                'Authorization': `Bearer ${token}`
             },
         });
         let form_parse_data = await form_response.json();
-        console.log(" form_parse_data: ",form_parse_data)
+        console.log(" form_parse_data: ", form_parse_data)
 
         let data = form_parse_data.data
-        console.log("data : ",data)
+        console.log("data : ", data)
 
         name.value = data[0].name
         email.value = data[0].email
@@ -418,23 +416,29 @@ async function currentdata() {
         image
         console.log("error : ", error)
     }
-   
+
 }
 
 async function updateUser(event) {
-    event.preventDefault()  
+    event.preventDefault()
 
     let image = document.getElementById('image');
+    console.log("image : ",image)
     let file = image.files[0];
+    console.log("file : ",file)
 
-    if (!file ) {
-        alert("Please select image.");
-        return;
-    }
+    // if (!file ) {
+    //     alert("Please select image.");
+    //     return;
+    // }
 
     try {
-        let dataUrl1 = await readFileAsDataURL(file);
-        await updateData(dataUrl1);
+        if (file === undefined  || "undefined") {
+           await updateData()
+        }else{
+            let dataUrl1 = await readFileAsDataURL(file);
+            await updateData(dataUrl1);
+        }
     } catch (error) {
         console.error("Error reading files:", error);
         alert("An error occurred while reading the files. Please try again.");
@@ -454,7 +458,7 @@ function readFileAsDataURL(file) {
 async function updateData(dataUrl1) {
     let name = document.getElementById('name').value;
     let email = document.getElementById('email').value;
-    let userType = document.getElementById('userType').value 
+    let userType = document.getElementById('userType').value
     let joiningdate = document.getElementById('joiningdate').value
 
     let UpdateDatas = {
@@ -462,7 +466,7 @@ async function updateData(dataUrl1) {
         email,
         userType,
         joiningdate,
-        image : dataUrl1
+        image: dataUrl1
     }
     let Str_UpdateData = JSON.stringify(UpdateDatas);
     console.log("Str_UpdateData", Str_UpdateData);
@@ -485,7 +489,7 @@ async function updateData(dataUrl1) {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json',
-                'Authorization' : `Bearer ${token}`
+                'Authorization': `Bearer ${token}`
             },
             body: Str_UpdateData
 
@@ -504,7 +508,7 @@ async function updateData(dataUrl1) {
     }
 }
 
-function handleClickEdit1(id,tokenkey){
+function handleClickEdit1(id, tokenkey) {
     window.location.href = `employeeupdate.html?id=${id}&login=${tokenkey}`
 }
 
@@ -523,22 +527,22 @@ async function currentdata1() {
 
     let name = document.getElementById('name');
     let email = document.getElementById('email')
-    let userType = document.getElementById('userType'); 
+    let userType = document.getElementById('userType');
     let joiningdate = document.getElementById('joiningdate')
 
     try {
-        let form_response = await fetch(`/users/${id}`,{
+        let form_response = await fetch(`/users/${id}`, {
             method: 'GET',
             headers: {
                 'Content-Type': "application/json",
-                'Authorization' : `Bearer ${token}`
+                'Authorization': `Bearer ${token}`
             },
         });
         let form_parse_data = await form_response.json();
-        console.log(" form_parse_data: ",form_parse_data)
+        console.log(" form_parse_data: ", form_parse_data)
 
         let data = form_parse_data.data
-        console.log("data : ",data)
+        console.log("data : ", data)
 
         name.value = data[0].name
         email.value = data[0].email
@@ -548,18 +552,18 @@ async function currentdata1() {
         image
         console.log("error : ", error)
     }
-   
+
 }
 
 async function updateEmployee(event) {
     event.preventDefault()
 
-    event.preventDefault()  
+    event.preventDefault()
 
     let image = document.getElementById('image');
     let file = image.files[0];
 
-    if (!file ) {
+    if (!file) {
         alert("Please select image.");
         return;
     }
@@ -584,18 +588,18 @@ function readFileAsDataURL(file) {
 }
 
 async function updateData1(dataUrl2) {
-   let name = document.getElementById('name').value;
+    let name = document.getElementById('name').value;
     let email = document.getElementById('email').value;
-    let userType = document.getElementById('userType').value 
-    let joiningdate = document.getElementById('joiningdate').value 
+    let userType = document.getElementById('userType').value
+    let joiningdate = document.getElementById('joiningdate').value
 
     let UpdateDatas = {
         name,
         email,
         userType,
         joiningdate,
-        image : dataUrl2
-        
+        image: dataUrl2
+
     }
     let Str_UpdateData = JSON.stringify(UpdateDatas);
     console.log("Str_UpdateData", Str_UpdateData);
@@ -618,7 +622,7 @@ async function updateData1(dataUrl2) {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json',
-                'Authorization' : `Bearer ${token}`
+                'Authorization': `Bearer ${token}`
             },
             body: Str_UpdateData
 
@@ -640,39 +644,39 @@ async function updateData1(dataUrl2) {
 async function employeeprofile() {
 
     let params = new URLSearchParams(window.location.search);
-        console.log("params", params);
-    
-        let id = params.get('id')
-        console.log("id from update data", id);
-    
-        let tokenkey = params.get('login')
-        console.log("tokenkey", tokenkey);
-    
-        let token = localStorage.getItem(tokenkey);
-        console.log("token:", token);
-    
-        try {
-            let response = await fetch(`/users/${id}`,{
-                method: 'GET',
-                headers: {
-                    'Content-Type': "application/json",
-                    'Authorization' : `Bearer ${token}`
-                },
-            });
-            console.log("response : ", response);
-    
-            let parsed_response = await response.json();
-            console.log("parsed_response : ", parsed_response);
-    
-            let data = parsed_response.data;
-            console.log("data : ", data);
-        
-            let rows = ''; 
-    
-            for (let i = 0; i < data.length; i++) {
-                console.log(data[i]);
-    
-                rows += `
+    console.log("params", params);
+
+    let id = params.get('id')
+    console.log("id from update data", id);
+
+    let tokenkey = params.get('login')
+    console.log("tokenkey", tokenkey);
+
+    let token = localStorage.getItem(tokenkey);
+    console.log("token:", token);
+
+    try {
+        let response = await fetch(`/users/${id}`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': "application/json",
+                'Authorization': `Bearer ${token}`
+            },
+        });
+        console.log("response : ", response);
+
+        let parsed_response = await response.json();
+        console.log("parsed_response : ", parsed_response);
+
+        let data = parsed_response.data;
+        console.log("data : ", data);
+
+        let rows = '';
+
+        for (let i = 0; i < data.length; i++) {
+            console.log(data[i]);
+
+            rows += `
     <div class="container ">
     <div class="row d-flex flex-column ">
         <img src="${data[i].image}" class="singleemployeecontainerimg mb-2"> 
@@ -683,51 +687,51 @@ async function employeeprofile() {
 </div>
 </div>
                 `;
-            }
-            
-            document.getElementById('container').innerHTML = rows;
-    
-        } catch (error) {
-            console.log("error : ", error);
         }
+
+        document.getElementById('container').innerHTML = rows;
+
+    } catch (error) {
+        console.log("error : ", error);
+    }
 }
 
 async function adminprofile() {
 
     let params = new URLSearchParams(window.location.search);
-        console.log("params", params);
-    
-        let id = params.get('id')
-        console.log("id from update data", id);
-    
-        let tokenkey = params.get('login')
-        console.log("tokenkey", tokenkey);
-    
-        let token = localStorage.getItem(tokenkey);
-        console.log("token:", token);
-    
-        try {
-            let response = await fetch(`/users/${id}`,{
-                method: 'GET',
-                headers: {
-                    'Content-Type': "application/json",
-                    'Authorization' : `Bearer ${token}`
-                },
-            });
-            console.log("response : ", response);
-    
-            let parsed_response = await response.json();
-            console.log("parsed_response : ", parsed_response);
-    
-            let data = parsed_response.data;
-            console.log("data : ", data);
-        
-            let rows = ''; 
-    
-            for (let i = 0; i < data.length; i++) {
-                console.log(data[i]);
-    
-                rows += `
+    console.log("params", params);
+
+    let id = params.get('id')
+    console.log("id from update data", id);
+
+    let tokenkey = params.get('login')
+    console.log("tokenkey", tokenkey);
+
+    let token = localStorage.getItem(tokenkey);
+    console.log("token:", token);
+
+    try {
+        let response = await fetch(`/users/${id}`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': "application/json",
+                'Authorization': `Bearer ${token}`
+            },
+        });
+        console.log("response : ", response);
+
+        let parsed_response = await response.json();
+        console.log("parsed_response : ", parsed_response);
+
+        let data = parsed_response.data;
+        console.log("data : ", data);
+
+        let rows = '';
+
+        for (let i = 0; i < data.length; i++) {
+            console.log(data[i]);
+
+            rows += `
     <div class="container ">
     <div class="row d-flex flex-column ">
         <img src="${data[i].image}" class="singleemployeecontainerimg mb-2"> 
@@ -738,23 +742,23 @@ async function adminprofile() {
 </div>
 </div>
                 `;
-            }
-            
-            document.getElementById('container').innerHTML = rows;
-    
-        } catch (error) {
-            console.log("error : ", error);
         }
+
+        document.getElementById('container').innerHTML = rows;
+
+    } catch (error) {
+        console.log("error : ", error);
+    }
 }
 
-async function handleClickDelete(id,tokenkey) {
+async function handleClickDelete(id, tokenkey) {
 
     let params = new URLSearchParams(window.location.search);
     console.log("params", params);
 
     let tokenKey = tokenkey;
 
-    let token= localStorage.getItem(tokenKey);
+    let token = localStorage.getItem(tokenKey);
     console.log("tokenKey:", token);
 
     try {
@@ -762,7 +766,7 @@ async function handleClickDelete(id,tokenkey) {
             method: 'DELETE',
             headers: {
                 'Content-Type': "application/json",
-                'Authorization' : `Bearer ${token}`
+                'Authorization': `Bearer ${token}`
             },
         })
         let parsed_Delete_response = await Delete_response.json();
@@ -770,9 +774,9 @@ async function handleClickDelete(id,tokenkey) {
 
         window.location.href = `admin.html?id=${id}&login=${tokenKey}`
 
-        if(parsed_Delete_response){
+        if (parsed_Delete_response) {
             alert("Book Deleted Successfully")
-        }else{
+        } else {
             alert("Book Not Deleted")
         }
     } catch (error) {
@@ -781,18 +785,18 @@ async function handleClickDelete(id,tokenkey) {
 }
 
 //To reset password
-function handleClickreset(){
+function handleClickreset() {
 
     let resetform = document.getElementById('resetform');
     if (resetform.style.display === 'none' || resetform.style.display === '') {
-        resetform.style.display = 'block'; 
+        resetform.style.display = 'block';
     } else {
-        resetform.style.display = 'none'; 
+        resetform.style.display = 'none';
     }
 
 }
 
-async function passwordreset(event){
+async function passwordreset(event) {
     event.preventDefault();
 
     let params = new URLSearchParams(window.location.search);
@@ -818,11 +822,11 @@ async function passwordreset(event){
     let strDatas = JSON.stringify(datas);
 
     try {
-        let resetResponse = await fetch(`/passwordreset`, {
+        let resetResponse = await fetch(`/passwordreset/${id}`, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json',
-                'Authorization' : `Bearer ${token}`
+                'Authorization': `Bearer ${token}`
             },
             body: strDatas
 
@@ -855,7 +859,7 @@ function passtoken() {
     console.log("url", urlParams);
 
     let tokenkey = urlParams.get('login');
-    console.log("tokenkey : ",tokenkey)
+    console.log("tokenkey : ", tokenkey)
 
     window.location.href = `adduser.html?login=${tokenkey}`
 }
@@ -871,10 +875,10 @@ function passtoken1() {
     console.log("url", urlParams);
 
     let tokenkey = urlParams.get('loginid');
-    console.log("tokenkeysingle : ",tokenkey)
+    console.log("tokenkeysingle : ", tokenkey)
 
     let id = urlParams.get('id');
-    console.log("singleid : ",id)
+    console.log("singleid : ", id)
 
     window.location.href = `admin.html?login=${tokenkey}&id=${id}`
 }
@@ -890,10 +894,10 @@ function passtoken2() {
     console.log("url", urlParams);
 
     let tokenkey = urlParams.get('login');
-    console.log("tokenkeysingle : ",tokenkey)
+    console.log("tokenkeysingle : ", tokenkey)
 
     let id = urlParams.get('id');
-    console.log("singleid : ",id)
+    console.log("singleid : ", id)
 
     window.location.href = `admin.html?login=${tokenkey}&id=${id}`
 }
@@ -905,12 +909,12 @@ function logoutalert() {
 
     if (logoutdiv.style.display === 'none' || logoutdiv.style.display === '') {
         logoutdiv.style.display = 'block';
-        offcanvasbody.classList.add('blur'); 
+        offcanvasbody.classList.add('blur');
 
         logoutdiv.querySelector('input, button').focus();
     } else {
-        logoutdiv.style.display = 'none'; 
-        offcanvasbody.classList.remove('blur'); 
+        logoutdiv.style.display = 'none';
+        offcanvasbody.classList.remove('blur');
     }
 }
 function logout() {
@@ -925,11 +929,11 @@ function logout() {
     console.log("url", urlParams);
 
     let tokenkey = urlParams.get('login');
-    console.log("tokenkey : ",tokenkey)
+    console.log("tokenkey : ", tokenkey)
 
     localStorage.removeItem(tokenkey);
-    console.log("keys in localstorage : ",Object.keys(localStorage))
-    window.location.href = `index.html` 
+    console.log("keys in localstorage : ", Object.keys(localStorage))
+    window.location.href = `index.html`
 }
 function nologout() {
     window.location = window.location.href;

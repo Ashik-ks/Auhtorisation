@@ -24,7 +24,7 @@ exports.resetPassword = function (name, email, password) {
                           }
                       
                           .banner {
-                            background-color: #48BA81 !important;
+                            background-color:#FFA500 !important;
                           }
                       
                           .pt-3 {
@@ -73,7 +73,7 @@ exports.resetPassword = function (name, email, password) {
                           }
                       
                           .text-warning {
-                            color: #ff8800 !important;
+                            color: #FF0000 !important;
                           }
                       
                           .text-white {
@@ -108,6 +108,11 @@ exports.resetPassword = function (name, email, password) {
                           .table-bg{
                             background-color: #f3f3f3;
                           }
+                      
+                      .regards{
+                       margin-bottom: 0.5rem;
+                      margin-top: 1rem
+                      }
                     </style>
                 </head>
 
@@ -119,7 +124,7 @@ exports.resetPassword = function (name, email, password) {
                     </div>
                     <div class="container mt-3 mb-5">
                         <div class="p-3">
-                            <div>Hello ${name},</div>
+                            <div >Hello <span class="text-warning">${name}</span>,</div>
                             <div class="mb-3 text-justify mt-3">
                               <span class="text-dark">
                                     <!--add any text here-->
@@ -137,10 +142,13 @@ exports.resetPassword = function (name, email, password) {
                               <br><br>
                               <span class="text-dark">
                              Please do not show or forward it to third parties.
+                                 <div class="regards">With regards,</div>
+                                <span>UMS</span>
                                 <br><br>
                               The information contained in this message is intended for the addressee only and may contain classified information. If you are not the addressee, please delete this message and notify the sender; you should not copy or distribute it or disclose its contents to anyone. 
                               </span>
                               <br><br><br><br>
+                               
                               <span class="text-muted text-justify mt-3">
                                 <!--Помощь - это просто. Главное - делать это вместе.-->
                                 <br><br>
@@ -154,7 +162,7 @@ exports.resetPassword = function (name, email, password) {
                         </div>
                     </div>
                 </body>
-            </html>           
+            </html>       
               `;
         resolve(template);
       }

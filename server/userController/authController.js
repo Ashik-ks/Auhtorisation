@@ -95,10 +95,10 @@ exports.passwordreset = async function (req, res) {
     try {
 
         
-        let email = req.body.email;
-        console.log("email : ", email);
+        // let email = req.body.email;
+        // console.log("email : ", email);
 
-        let _id = req.params;
+        let _id = req.params.id;
         console.log("_id")
         let user = await users.findOne({ _id });
 

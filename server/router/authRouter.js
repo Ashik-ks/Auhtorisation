@@ -11,6 +11,6 @@ function setAccessControl(access_types) {
 }
 
 router.post('/login',setAccessControl("*"),authController.login);
-router.put('/passwordreset',setAccessControl("1,2"),authController.passwordreset)
+router.put('/passwordreset/:id',setAccessControl("1,2"),authController.passwordreset)
 
 module.exports = router;
