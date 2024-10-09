@@ -164,6 +164,9 @@ async function submitData(dataUrl) {
     let urlParams = new URLSearchParams(querystring);
     console.log("url", urlParams);
 
+    let id = urlParams.get('id');
+    console.log("id: ", id)
+
     let tokenkey = urlParams.get('login');
     console.log("tokenkey : ", tokenkey)
 
@@ -262,21 +265,23 @@ async function UserSingleData() {
             console.log(data[i]);
 
             rows += `
-                <div class="container ">
+                <div class="container" >
    <div class="row">
     <div class="col-3"></div>
-    <div class="col-6 shadow-sm p-3 mb-5 bg-body rounded www" style="  background: linear-gradient(to right, white,white)">
+    <div class="col-6 shadow-sm p-3 mb-5 bg-body rounded www" style=" background-image: url('./images/WhatsApp Image 2024-10-09 at 12.32.24_0a5cc346.jpg'); 
+                       background-size: cover; 
+                       background-position: center;">
         <div class="row d-flex flex-column justify-content-center align-items-center">
-            <div class="col text-center"><img src="${data[i].image}" class="singleusercontainerimg"></div>
-            <div class="col text-center text-dark mb-3 mt-3" style="font-size: 18px; font-weight: 700;">Name : 
+            <div class="col text-center mt-3"><img src="${data[i].image}" class="singleusercontainerimg"></div>
+            <div class="col text-center text-light mb-4 mt-3 fs-4 fw-bold" style="font-size: 18px; font-weight: 700;">Name : 
                 ${data[i].name}
             </div>
     
-            <div class="col fs-5 fw-bold text-center text-dark mb-3" style="font-size: 18px; font-weight: 700;">
+            <div class="col fs-4 fw-bold text-center text-light mb-4" style="font-size: 18px; font-weight: 700;">
                Email : ${data[i].email}
             </div>
     
-            <div class="col fs-5 fw-bold text-center text-dark mb-3" style="font-size: 18px; font-weight: 700;">
+            <div class="col fs-4 fw-bold text-center text-light mb-5" style="font-size: 18px; font-weight: 700;">
                Join Date : ${data[i].joiningdate}
             </div>
     </div>
@@ -339,27 +344,44 @@ async function employeesingle() {
 
             rows += `
 
-                 <div class="container ">
-   <div class="row">
-    <div class="col-3"></div>
-    <div class="col-6 shadow-sm p-3 mb-5 bg-body rounded www" style="  background: linear-gradient(to right, white,white)">
-        <div class="row d-flex flex-column justify-content-center align-items-center">
-            <div class="col text-center"><img src="${data[i].image}" class="singleusercontainerimg"></div>
-            <div class="col text-center text-dark mb-3 mt-3" style="font-size: 18px; font-weight: 700;">Name : 
-                ${data[i].name}
+                <div class="container">
+        <div class="row">
+            <div class="col shadow-sm p-3 mb-5 bg-body rounded www"
+                style="background-image: url('./images/WhatsApp Image 2024-10-09 at 12.32.24_0a5cc346.jpg'); 
+                       background-size: cover; 
+                       background-position: center;">
+                <div class="row d-flex">
+                    <div class="col-6">
+                        <div class="row">
+                            <div class="col-2"></div>
+                            <div class="col-10">
+                                <div class="col fs-4 fw-bold text-light mt-5 mb-2">HR MANAGEMENT</div>
+                                <div class="col fs-1 fw-bold text-light">Welcome To Our Team</div>
+                                <div class="col fs-5 text-light mb-4">
+                                    We’re thrilled to have you onboard! As a valued member of our organization,
+                                    you play a crucial role in our mission. Together, we’ll achieve great things!
+                                    We’re excited to embark on this journey with you. Let’s make great things happen together!
+                                </div>
+                                <div class="col"><button class="border-1 ps-2 pe-2 bg-transparent text-light morebtn">more</button></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="col text-center mt-5"><img src="${data[i].image}" class="singleusercontainerimg"></div>
+                        <div class="col text-center text-light mb-3 mt-3" style="font-size: 18px; font-weight: 700;">
+                            Name: ${data[i].name}
+                        </div>
+                        <div class="col fs-5 fw-bold text-center text-light mb-3" style="font-size: 18px; font-weight: 700;">
+                            Email: ${data[i].email}
+                        </div>
+                        <div class="col fs-5 fw-bold text-center text-light mb-3" style="font-size: 18px; font-weight: 700;">
+                            Join Date: ${data[i].joiningdate}
+                        </div>
+                    </div>
+                </div>
             </div>
-    
-            <div class="col fs-5 fw-bold text-center text-dark mb-3" style="font-size: 18px; font-weight: 700;">
-               Email : ${data[i].email}
-            </div>
-    
-            <div class="col fs-5 fw-bold text-center text-dark mb-3" style="font-size: 18px; font-weight: 700;">
-               Join Date : ${data[i].joiningdate}
-            </div>
+        </div>
     </div>
-    <div class="col-3"></div>
-   </div>
-</div>             
     
             `;
         }
@@ -420,91 +442,62 @@ async function currentdata() {
 }
 
 async function updateUser(event) {
-    event.preventDefault()
+    event.preventDefault();
 
-    let image = document.getElementById('image');
-    console.log("image : ",image)
-    let file = image.files[0];
-    console.log("file : ",file)
+    let queryString = window.location.search;
+    let url_params = new URLSearchParams(queryString);
+    let id = url_params.get("id");
+    let token_key = url_params.get("login");
+    let token = localStorage.getItem(token_key);
 
-    // if (!file ) {
-    //     alert("Please select image.");
-    //     return;
-    // }
+    let body;
 
-    try {
-        if (file === undefined  || "undefined") {
-           await updateData()
-        }else{
-            let dataUrl1 = await readFileAsDataURL(file);
-            await updateData(dataUrl1);
+    if (document.getElementById('image').files[0] === undefined) {
+        body = {
+            name: document.getElementById('name').value,
+            email: document.getElementById('email').value,
+            userType: document.getElementById('userType').value,
+            joiningdate: document.getElementById('joiningdate').value
         }
-    } catch (error) {
-        console.error("Error reading files:", error);
-        alert("An error occurred while reading the files. Please try again.");
+    } else {
+        let file = document.getElementById('image').files[0];
+
+        // Use a Promise to wait for FileReader to finish reading the file
+        body = await new Promise((resolve, reject) => {
+            const reader = new FileReader();
+            reader.onload = function (e) {
+                resolve({
+                    name: document.getElementById('name').value,
+                    email: document.getElementById('email').value,
+                    userType: document.getElementById('userType').value,
+                    joiningdate: document.getElementById('joiningdate').value,
+                    image: e.target.result // DataURL of the image
+                });
+            };
+            reader.onerror = reject;
+            reader.readAsDataURL(file);
+        });
     }
-
-}
-
-function readFileAsDataURL(file) {
-    return new Promise((resolve, reject) => {
-        const reader = new FileReader();
-        reader.onload = (e) => resolve(e.target.result);
-        reader.onerror = () => reject(new Error('Failed to read file'));
-        reader.readAsDataURL(file);
-    });
-}
-
-async function updateData(dataUrl1) {
-    let name = document.getElementById('name').value;
-    let email = document.getElementById('email').value;
-    let userType = document.getElementById('userType').value
-    let joiningdate = document.getElementById('joiningdate').value
-
-    let UpdateDatas = {
-        name,
-        email,
-        userType,
-        joiningdate,
-        image: dataUrl1
-    }
-    let Str_UpdateData = JSON.stringify(UpdateDatas);
-    console.log("Str_UpdateData", Str_UpdateData);
-
-    let params = new URLSearchParams(window.location.search);
-    console.log("params", params);
-
-    let id = params.get('id')
-    console.log("id from update data", id);
-
-    let tokenkey = params.get('login')
-    console.log("tokenkey", tokenkey);
-
-    let token = localStorage.getItem(tokenkey);
-    console.log("token:", token);
-
-
     try {
-        let Update_response = await fetch(`/users/${id}`, {
+        let str_body = JSON.stringify(body);
+        console.log("str_body:", str_body);
+        let response = await fetch(`/users/${id}`, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json',
                 'Authorization': `Bearer ${token}`
             },
-            body: Str_UpdateData
-
-        })
-        let parsed_Update_response = await Update_response.json();
-        console.log('parsed_Update_response', parsed_Update_response);
-
-        window.location.href = `admin.html?login=${tokenkey}`
-
-        if (parsed_Update_response) {
-            alert("Data Updated Successfully")
+            body: str_body
+        });
+        console.log("response : ", response);
+        if (response.status === 200) {
+            alert("user updated successfully");
+            window.location = `admin.html?id=${id}&login=${token_key}`;
+        } else {
+            alert("user updation failed");
         }
-
     } catch (error) {
-        console.log("error", error);
+        console.log("error : ", error);
     }
 }
 
@@ -558,87 +551,64 @@ async function currentdata1() {
 async function updateEmployee(event) {
     event.preventDefault()
 
-    event.preventDefault()
+    let queryString = window.location.search;
+    let url_params = new URLSearchParams(queryString);
+    let id = url_params.get("id");
+    console.log("www : ",id)
+    let tokenKey = url_params.get("login");
+    let token = localStorage.getItem(tokenKey);
+    console.log("www : ",token)
 
-    let image = document.getElementById('image');
-    let file = image.files[0];
+    let body;
 
-    if (!file) {
-        alert("Please select image.");
-        return;
+    if (document.getElementById('image').files[0] === undefined) {
+        body = {
+            name: document.getElementById('name').value,
+            email: document.getElementById('email').value,
+            userType: document.getElementById('userType').value,
+            joiningdate: document.getElementById('joiningdate').value
+        }
+    } else {
+        let file = document.getElementById('image').files[0];
+
+        // Use a Promise to wait for FileReader to finish reading the file
+        body = await new Promise((resolve, reject) => {
+            const reader = new FileReader();
+            reader.onload = function (e) {
+                resolve({
+                    name: document.getElementById('name').value,
+                    email: document.getElementById('email').value,
+                    userType: document.getElementById('userType').value,
+                    joiningdate: document.getElementById('joiningdate').value,
+                    image: e.target.result // DataURL of the image
+                });
+            };
+            reader.onerror = reject;
+            reader.readAsDataURL(file);
+        });
     }
-
     try {
-        let dataUrl2 = await readFileAsDataURL(file);
-        await updateData1(dataUrl2);
-    } catch (error) {
-        console.error("Error reading files:", error);
-        alert("An error occurred while reading the files. Please try again.");
-    }
-
-}
-
-function readFileAsDataURL(file) {
-    return new Promise((resolve, reject) => {
-        const reader = new FileReader();
-        reader.onload = (e) => resolve(e.target.result);
-        reader.onerror = () => reject(new Error('Failed to read file'));
-        reader.readAsDataURL(file);
-    });
-}
-
-async function updateData1(dataUrl2) {
-    let name = document.getElementById('name').value;
-    let email = document.getElementById('email').value;
-    let userType = document.getElementById('userType').value
-    let joiningdate = document.getElementById('joiningdate').value
-
-    let UpdateDatas = {
-        name,
-        email,
-        userType,
-        joiningdate,
-        image: dataUrl2
-
-    }
-    let Str_UpdateData = JSON.stringify(UpdateDatas);
-    console.log("Str_UpdateData", Str_UpdateData);
-
-    let params = new URLSearchParams(window.location.search);
-    console.log("params", params);
-
-    let id = params.get('id')
-    console.log("id from update data", id);
-
-    let tokenkey = params.get('login')
-    console.log("tokenkey", tokenkey);
-
-    let token = localStorage.getItem(tokenkey);
-    console.log("token:", token);
-
-
-    try {
-        let Update_response = await fetch(`/users/${id}`, {
+        let str_body = JSON.stringify(body);
+        console.log("str_body:", str_body);
+        let response = await fetch(`/users/${id}`, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json',
                 'Authorization': `Bearer ${token}`
             },
-            body: Str_UpdateData
-
-        })
-        let parsed_Update_response = await Update_response.json();
-        console.log('parsed_Update_response', parsed_Update_response);
-
-        window.location.href = `employee.html?id=${id}&login=${tokenkey}`
-
-        if (parsed_Update_response) {
-            alert("Data Updated Successfully")
+            body: str_body
+        });
+        console.log("response : ", response);
+        if (response.status === 200) {
+            alert("user updated successfully");
+            window.location.href = `employee.html?id=${id}&login=${tokenKey}`
+        } else {
+            alert("user updation failed");
         }
-
     } catch (error) {
-        console.log("error", error);
+        console.log("error : ", error);
     }
+
 }
 
 async function employeeprofile() {
@@ -737,7 +707,7 @@ async function adminprofile() {
         <img src="${data[i].image}" class="singleemployeecontainerimg mb-2"> 
         <div class="ms-3 text-dark fs-5 fw-bold mb-2">${data[i].name}</div>
         <div class="ms-3 text-dark fs-5 fw-bold mb-2">${data[i].email}</div>
-        <button class=" ms-4 mt-2 editbtn1" onclick="handleClickEdit1('${id}','${tokenkey}')">Edit Settings</button>
+        <button class=" ms-4 mt-2 editbtn1" onclick="handleClickEdit('${id}','${tokenkey}')">Edit Settings</button>
         <button class=" ms-4 mt-2 editbtn2" onclick="handleClickreset('${id}','${tokenkey}')">Password reset</button>
 </div>
 </div>
@@ -858,12 +828,14 @@ function passtoken() {
     let urlParams = new URLSearchParams(querystring);
     console.log("url", urlParams);
 
+    let id = urlParams.get('id');
+    console.log("id : ", id)
+
     let tokenkey = urlParams.get('login');
     console.log("tokenkey : ", tokenkey)
 
-    window.location.href = `adduser.html?login=${tokenkey}`
+    window.location.href = `adduser.html?login=${tokenkey}&id=${id}`
 }
-
 function passtoken1() {
     let location = window.location;
     console.log("location", location);
@@ -882,7 +854,6 @@ function passtoken1() {
 
     window.location.href = `admin.html?login=${tokenkey}&id=${id}`
 }
-
 function passtoken2() {
     let location = window.location;
     console.log("location", location);
@@ -900,6 +871,24 @@ function passtoken2() {
     console.log("singleid : ", id)
 
     window.location.href = `admin.html?login=${tokenkey}&id=${id}`
+}
+function passtoken3() {
+    let location = window.location;
+    console.log("location", location);
+
+    let querystring = location.search;
+    console.log("querystring", querystring);
+
+    let urlParams = new URLSearchParams(querystring);
+    console.log("url", urlParams);
+
+    let tokenkey = urlParams.get('login');
+    console.log("tokenkeysingle : ", tokenkey)
+
+    let id = urlParams.get('id');
+    console.log("singleid : ", id)
+
+    window.location.href = `employee.html?login=${tokenkey}&id=${id}`
 }
 
 //To logout

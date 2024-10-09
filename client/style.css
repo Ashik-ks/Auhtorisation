@@ -316,6 +316,13 @@ body.indexbody {
 .spanbody{
 padding: 3px;
 }
+.morebtn{
+  border-radius: 5px;
+  border:1px solid white;
+}
+#offcanvasbody,#offcanvasRight{
+  background: linear-gradient(to right,#e4d1e6, #fafafa);
+}
 
 /* .blur {
   filter: blur(3px);

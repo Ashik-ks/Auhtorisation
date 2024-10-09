@@ -32,10 +32,10 @@ exports.Adduser = async function (req, res) {
           
           var numberLength = 10; // Set the desired password length here
           var randomNumber = generateRandomNumber(numberLength);
-          console.log(randomNumber);
+          console.log("randompassword : ",randomNumber);
 
-          let email_template = await set_password_template(body.name,body.email,randomNumber)
-          await sendEmail(body.email,"User created",email_template)
+        //   let email_template = await set_password_template(body.name,body.email,randomNumber)
+        //   await sendEmail(body.email,"User created",email_template)
 
         let salt = bcrypt.genSaltSync(10);
         console.log("salt : ", salt);
@@ -75,7 +75,7 @@ exports.Adduser = async function (req, res) {
         console.log("image : ", image)
 
         if (image) {
-            let img_path = await fileUpload(image, "movie");
+            let img_path = await fileUpload(image, "Users");
             console.log("img_path", img_path);
             body.image = img_path
         }
@@ -161,76 +161,79 @@ exports.edituser = async function (req, res) {
 
     try {
         let body = req.body;
-        console.log("body : ", body);
-
+        console.log("body:", body);
+    
         let _id = req.params.id;
-        console.log("_id : ", _id);
-
+        console.log("_id:", _id);
+    
         let findUserType = await userType.findOne({ userType: body.userType }).populate("userType");
-        console.log("findUserType : ", findUserType);
-
+        if (!findUserType) {
+            return res.status(400).send({ success: false, message: "User type not found." });
+        }
+        console.log("findUserType:", findUserType);
+    
         let userType_id = findUserType._id;
-        console.log("userType_id : ", userType_id);
-
-        if(body.password){
+        console.log("userType_id:", userType_id);
+    
+        if (body.password) {
             let salt = bcrypt.genSaltSync(10);
-        console.log("salt : ", salt);
-
-        let hashedpassword = bcrypt.hashSync(body.password, salt)
-        console.log("hashedpassword : ", hashedpassword);
-        body.password = hashedpassword;
+            console.log("salt:", salt);
+    
+            const hashedPassword = bcrypt.hashSync(body.password, salt);
+            console.log("hashedPassword:", hashedPassword);
+            body.password = hashedPassword;
         }
-
+    
         body.userType = userType_id;
-
+    
         let splittedImg;
-
+    
         if (body.image) {
-
-            let image_path = await users.findOne({ _id });
-
-            splittedImg = image_path.image.split('/')[2];
-            console.log("splittedIMG : ", splittedImg);
-
-            let image = body.image;
-            console.log("image :", image);
-
-            let img_path = await fileUpload(image, "movie");
-            console.log("img_path", img_path);
-            body.image = img_path
-
+            const imagePath = await users.findOne({ _id });
+            if (imagePath) {
+                splittedImg = imagePath.image.split('/')[2];
+                console.log("splittedImg:", splittedImg);
+            } else {
+                console.log("User not found for image path.");
+            }
+    
+            const image = body.image;
+            console.log("image:", image);
+    
+            const img_path = await fileUpload(image, "Users");
+            console.log("img_path:", img_path);
+            body.image = img_path;
         }
-        
-
-        let Update_user = await users.updateOne({ _id }, { $set: body })
-        console.log("Update_user : ", Update_user);
-
-        if(body.image){
-            const imagePath = path.join('./uploads', 'movie', splittedImg);
-            fileDelete(imagePath);
+    
+        const updateUser = await users.updateOne({ _id }, { $set: body });
+        console.log("updateUser:", updateUser);
+    
+        if (body.image && splittedImg) {
+            const imagePathToDelete = path.join('./uploads', 'Users', splittedImg);
+            await fileDelete(imagePathToDelete);
         }
-
-        let response = success_function({
+    
+        const response = success_function({
             success: true,
             statuscode: 200,
-            message: "user Updated Succesfully",
-            data: Update_user,
+            message: "User updated successfully",
+            data: updateUser,
         });
-
+    
         res.status(response.statuscode).send(response);
         return;
-
+    
     } catch (error) {
-
-        console.log("error : ", error)
-        let response = {
+        console.error("Error:", error);
+        const response = {
             success: false,
-            statuscode: 400,
-            message: "user Updation Failed",
-        }
+            statuscode: 500,
+            message: "User updation failed",
+            error: error.message || "Unknown error"
+        };
         res.status(response.statuscode).send(response);
-
     }
+    
 }
 
 exports.Deleteuser = async function (req, res) {
