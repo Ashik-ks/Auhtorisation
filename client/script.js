@@ -98,25 +98,27 @@ async function getusers() {
     for (i = 0; i < data.length; i++) {
         let id = data[i]._id;
         rows = rows + `
+
           <div class="container mb-4 bg-white shadow-sm p-3 mb-5 bg-body rounded">
     
-        <div class="row d-flex justify-content-center align-items-center">
-            <div class="col text-center" onclick="handleClick('${id}','${tokenkey}')">
-                <img src="${data[i].image}" class="adminDatacontainerimg" alt="User Image">
-            </div>
-            <div class="col text-center text-dark" style="font-size: 18px; font-weight: 700;">
-                ${data[i].name}
-            </div>
-            <div class="col fs-5 fw-bold text-center text-dark" style="font-size: 18px; font-weight: 700;">
-                ${data[i].email}
-            </div>
-            <div class="col text-center">
-                <button class="editbtn" onclick="handleClickEdit('${id}','${tokenkey}')">Edit</button>
-            </div>
-            <div class="col text-center">
-                <img src="./images/icons8-delete-30.png" alt="Delete" id="deleteimg" onclick="handleClickDelete('${id}','${tokenkey}')">
-            </div>
-        </div>
+       <div class="row d-flex justify-content-center align-items-center">
+                        
+                        <div class="col text-center" onclick="handleClick('${id}','${tokenkey}')">
+                            <img src="${data[i].image}" class="adminDatacontainerimg" alt="User Image">
+                        </div>
+                        <div class="col text-center text-dark" style="font-size: 18px; font-weight: 700;">
+                            ${data[i].name}
+                        </div>
+                        <div class="col fs-5 fw-bold text-center text-dark" style="font-size: 18px; font-weight: 700;">
+                            ${data[i].email}
+                        </div>
+                        <div class="col text-center">
+                            <button class="editbtn" onclick="handleClickEdit('${id}','${tokenkey}')">Edit</button>
+                        </div>
+                        <div class="col text-center">
+                            <img src="./images/icons8-delete-30.png" alt="Delete" id="deleteimg" onclick="handleClickDelete('${id}','${tokenkey}')">
+                        </div>
+                    </div>
     
 </div>
         `
@@ -554,10 +556,10 @@ async function updateEmployee(event) {
     let queryString = window.location.search;
     let url_params = new URLSearchParams(queryString);
     let id = url_params.get("id");
-    console.log("www : ",id)
+    console.log("www : ", id)
     let tokenKey = url_params.get("login");
     let token = localStorage.getItem(tokenKey);
-    console.log("www : ",token)
+    console.log("www : ", token)
 
     let body;
 

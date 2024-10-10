@@ -207,7 +207,7 @@ body.indexbody {
 .form-container1 {
     margin: auto;
     margin-top: 6%;
-    background: linear-gradient(to right, #fafafa, #e4d1e6);
+    background-image: url('./images/WhatsApp\ Image\ 2024-10-09\ at\ 12.32.24_0a5cc346.jpg');
     color: black;
     padding: 30px;
     border-radius: 10px;
@@ -323,7 +323,14 @@ padding: 3px;
 #offcanvasbody,#offcanvasRight{
   background: linear-gradient(to right,#e4d1e6, #fafafa);
 }
-
+.umsdiv{
+  height: 100vh;
+  background: linear-gradient(to right,#e4d1e6, #fafafa);
+}
+.adminDatacontainerimg{
+  width: 100px;
+  border-radius: 100%;
+}
 /* .blur {
   filter: blur(3px);
   transition: filter 0.3s ease;

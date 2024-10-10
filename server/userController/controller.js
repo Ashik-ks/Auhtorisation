@@ -43,6 +43,15 @@ exports.Adduser = async function (req, res) {
         let hashedpassword = bcrypt.hashSync(randomNumber, salt)
         console.log("hashedpassword : ", hashedpassword);
 
+        let image = body.image;
+        console.log("image : ", image)
+
+        if (image) {
+            let img_path = await fileUpload(image, "Users");
+            console.log("img_path", img_path);
+            body.image = img_path
+        }
+
         let newbody = {
             email : req.body.email,
             name : req.body.name,
@@ -71,14 +80,7 @@ exports.Adduser = async function (req, res) {
         // body.password = hashedpassword;
         // console.log("body.password : ", body.password)
 
-        let image = body.image;
-        console.log("image : ", image)
-
-        if (image) {
-            let img_path = await fileUpload(image, "Users");
-            console.log("img_path", img_path);
-            body.image = img_path
-        }
+        
 
         let Add_user = await users.create(newbody);
         console.log("Add_user : ", Add_user)
