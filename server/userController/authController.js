@@ -22,8 +22,6 @@ exports.login = async function (req, res) {
         console.log("user : ", user);
         console.log("user_types.userType.userType : ", user.userType.userType)
 
-
-
         if (user) {
 
             let db_password = user.password;
@@ -40,11 +38,14 @@ exports.login = async function (req, res) {
                 let token_id = user._id;
                 console.log("token_id : ", token_id);
 
+                user.loginCount = (user.loginCount || 0) + 1; // Default to 0 if undefined
+                await user.save();
 
                 response_data = {
                     token,
                     user_types: user.userType.userType,
-                    token_id: token_id
+                    token_id: token_id,
+                    loginCount:user.loginCount
                 }
                 console.log("response_data : ", response_data)
 

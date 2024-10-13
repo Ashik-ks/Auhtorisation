@@ -26,6 +26,10 @@ let user = new mongoose.Schema({
         type : mongoose.Schema.Types.ObjectId,
         ref : "userType" 
     },
+    loginCount: {
+        type: Number,
+        default: 0, // Default value set to 0
+    },
    
     
 })

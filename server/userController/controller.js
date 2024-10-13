@@ -1,4 +1,5 @@
 let users = require('../db/model/model');
+let userTypes = require('../db/model/userTypes')
 const { success_function, error_function } = require('../utils/responsehandler');
 const bcrypt = require('bcrypt')
 const userType = require('../db/model/userTypes')
@@ -106,28 +107,57 @@ exports.Adduser = async function (req, res) {
 
 exports.GetAlluser = async function (req, res) {
     try {
+        console.log("Request Query: ", req.query);
 
-        let users_Data = await users.find();
+        const userType = req.query.userType;
+        console.log("User Type: ", userType);
 
-        let response = {
+        // If userType is provided, find it in the database
+        let users_Data;
+
+        if (userType) {
+            const findUserType = await userTypes.findOne({ userType }).populate("userType");
+            console.log("Found User Type: ", findUserType);
+
+            if (!findUserType) {
+                return res.status(404).send({
+                    success: false,
+                    statuscode: 404,
+                    message: "User type not found",
+                });
+            }
+
+            const id = findUserType._id;
+            console.log("User Type ID: ", id);
+
+            // Fetch users based on the found user type
+            users_Data = await users.find({ userType: id }).populate("userType");
+        } else {
+            // If no userType is specified, fetch all users
+            users_Data = await users.find().populate("userType");
+        }
+
+        // Prepare the response object
+        const response = {
             success: true,
             statuscode: 200,
-            message: "user added succesfully",
-            data: users_Data
-        }
-        res.status(response.statuscode).send(response);
-        return;
+            message: "Users fetched successfully",
+            data: users_Data,
+        };
 
+        // Send the response
+        res.status(response.statuscode).send(response);
     } catch (error) {
-        console.log("error : ", error)
-        let response = {
+        console.error("Error: ", error);
+        const response = {
             success: false,
             statuscode: 400,
             message: "Something went wrong",
-        }
+        };
         res.status(response.statuscode).send(response);
     }
-}
+};
+
 
 exports.GetSingleuser = async function (req, res) {
 

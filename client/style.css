@@ -243,7 +243,7 @@ body.indexbody {
     font-weight: 500;
 }
 .editbtn1{
-  width: 25%;
+  width: 40%;
     background-color: #d685df; 
     border: none;
     padding: 2px;
@@ -254,7 +254,7 @@ body.indexbody {
 }
 
 .editbtn2{
-  width: 32%;
+  width: 50%;
     background-color: #d685df; 
     border: none;
     padding: 2px;
@@ -267,14 +267,12 @@ body.indexbody {
 .profileimg{
     width: 30px;
 }
-.adminDatacontainerimg{
-    width: 60px;
-}
 .singleemployeecontainer{
   width: 50px;
 }
 .singleemployeecontainerimg{
-  width: 200px;
+  width: 100px;
+  border-radius: 100%;
 }
 .singleusercontainerimg{
   width: 200px;
@@ -288,6 +286,223 @@ body.indexbody {
   margin-left: 8%;
 }
 
+.singleusercontainerimg {
+  border-radius: 50%; /* Optional: Makes the image circular */
+  transition: transform 0.3s ease;
+}
+
+.logout-link {
+  background-color: #333; 
+  color: white; 
+  border: none; 
+  border-radius: 5px;
+  cursor: pointer; 
+}
+.logout-link1 {
+ color: rgb(230, 18, 18);
+ background-color: transparent; 
+  border: none; 
+  border-radius: 5px;
+  cursor: pointer; 
+}
+
+#logoutdiv {
+  display: none;
+  margin-top: 10px;
+  padding: 10px;
+  border: 1px solid #dc3545;
+  background-color: #f8d7da;
+  border-radius: 5px; 
+}
+
+.text-danger {
+  color: #dc3545; 
+  font-weight: bold;
+}
+
+.spanbody {
+  padding: 3px 10px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.spanbody:hover {
+  background-color: rgba(220, 53, 69, 0.1);
+}
+
+.morebtn{
+  border-radius: 5px;
+  border:1px solid white;
+}
+#offcanvasbody,#offcanvasRight{
+  background: linear-gradient(to right,#e4d1e6, #fafafa);
+}
+.offcanvas{
+width: 17%;}
+.umsdiv{
+  height: 100vh;
+  background: linear-gradient(to right,#e4d1e6, #fafafa);
+}
+.adminDatacontainerimg{
+  width: 60px;
+}
+.adminpage {
+  display: flex;
+}
+header {
+  background-color: #16ffbd;
+  color: white;
+  padding: 15px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex: 0 0 60px;
+}
+
+.sidebar {
+  background-color: #333;
+  color: white;
+  width: 200px;
+  height: 100vh;
+  padding-top: 20px;
+}
+
+.sidebar ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+.sidebar li{
+  padding: 10px 20px;
+  cursor: pointer;
+}
+.settings{
+  background-color: #333;
+}
+.sidebar li.active {
+  background-color: #16ffbd;
+}
+
+main {
+  flex: 1;
+  padding: 20px;
+}
+
+.adminul {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.adminul input {
+  padding: 10px;
+  width: 70%;
+}
+
+
+.adminul .nav-link {
+  color: white;
+}
+
+.row {
+  margin-bottom: 20px;
+}
+
+
+.offcanvas {
+  width: 300px;
+}
+
+.offcanvas-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.profileimg {
+  width: 40px;
+  height: 40px;
+}
+
+.text-danger {
+  color: red;
+}
+.footer{
+  background-color: #333;
+}
+#fetchvalue2,#fetchvalue3{
+background-color: #333;
+border: none;
+color: white;
+}
+#fetchvalue1{
+  background-color:#16ffbd;
+border: none;
+color: white;
+}
+#filterdatacontainer{
+display: none;
+}
+#heading3,#heading2{
+  display: none;
+}
+
+.resetpasswordbody {
+  font-family: Arial, sans-serif;
+  background-color: #fce4ec;
+  color: #880e4f;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  margin: 0;
+}
+
+.resetpasswordcontainer {
+  background-color: #ffffff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  width: 300px;
+  text-align: center;
+}
+
+h1 {
+  margin-bottom: 20px;
+  color: #d81b60;
+}
+
+label {
+  display: block;
+  margin-bottom: 5px;
+  text-align: left;
+}
+
+.resetpassword{
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 15px;
+  border: 1px solid #d81b60;
+  border-radius: 4px;
+}
+
+.resetpasswordBtn {
+  background-color: #d81b60;
+  color: white;
+  padding: 10px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  width: 100%;
+}
+
+.resetpasswordBtn:hover {
+  background-color: #c2185b;
+}
+
+
+
 @keyframes fadeIn {
   from {
       opacity: 0;
@@ -298,60 +513,11 @@ body.indexbody {
       transform: translateY(0);
   }
 }
-
-.singleusercontainerimg {
-  border-radius: 50%; /* Optional: Makes the image circular */
-  transition: transform 0.3s ease;
-}
-
-.logout-link {
-  color: rgb(216, 16, 16);
- border: none;
- background-color: transparent;
-}
-#logoutdiv{
-  display: none;
-  background: linear-gradient(to right,#e4d1e6, #fafafa);
-}
-.spanbody{
-padding: 3px;
-}
-.morebtn{
-  border-radius: 5px;
-  border:1px solid white;
-}
-#offcanvasbody,#offcanvasRight{
-  background: linear-gradient(to right,#e4d1e6, #fafafa);
-}
-.umsdiv{
-  height: 100vh;
-  background: linear-gradient(to right,#e4d1e6, #fafafa);
-}
-.adminDatacontainerimg{
-  width: 100px;
-  border-radius: 100%;
-}
-/* .blur {
-  filter: blur(3px);
-  transition: filter 0.3s ease;
-} */
-
-
-
-
-
-
-
-
-
-
-
-/* Animation Styles */
 @keyframes fadeIn {
-    from {
-        opacity: 0;
-    }
-    to {
-        opacity: 1;
-    }
+  from {
+      opacity: 0;
+  }
+  to {
+      opacity: 1;
+  }
 }

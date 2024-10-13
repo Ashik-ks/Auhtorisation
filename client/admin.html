@@ -1,75 +1,152 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>User Management</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <link rel="stylesheet" href="style.css">
 </head>
+
 <body onload="getusers()" class="adduser">
-    
-        <div class="container-fluid bg-dark">
-            <nav class="navbar d-flex justify-content-center">
-                <ul class="d-flex">
-                   <button onclick="passtoken()" class="border-0 bg-transparent text-light fs-5">Add user</button>
-                    <!-- <li class="nav-item"> -->
-                        <a class="nav-link text-light text-decoration-none fs-5" href="./index.html">Login Page</a>
-                    <!-- </li> -->
-                    <li class="nav-item list-unstyled">
-                        <button class="btn" type="button" data-bs-toggle="offcanvas" 
-                                data-bs-target="#offcanvasRight" aria-controls="offcanvasRight" 
-                                onclick="adminprofile()">
-                            <img src="./images/icons8-female-profile-50.png" alt="User Profile" class="profileimg">
-                        </button>
-                        
-                        <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRight" 
-                             aria-labelledby="offcanvasRightLabel">
-                            <div class="offcanvas-header">
-                                <h5 id="offcanvasRightLabel" class="fs-5 fw-bold text-dark text-decoration-underline mt-3 ms-4">Your Profile</h5>
-                                <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" 
-                                        aria-label="Close"></button>
-                            </div>
-                            <div class="offcanvas-body" id="offcanvasbody ">
-                                <div id="container" class="">
-                                   
-                                </div>
-                                <form onsubmit="passwordreset(event)" id="resetform">
-                                    
-                                    <div class="mb-3 text-dark">
-                                        <label for="password">Current Password:</label>
-                                        <input type="password" id="resetpassword" name="password" class="form-control" placeholder="Enter Current password" required>
-                                    </div>
-                            
-                                    <div class="mb-3 text-dark">
-                                        <label for="newpassword">New Password:</label>
-                                        <input type="password" id="newpassword" name="newpassword" class="form-control" placeholder="Enter New password" required>
-                                    </div>
-                                    <button type="submit" class="editbtn mt-2">Submit</button>
-                                </form>
-                                <button onclick="logoutalert()" class="logout-link text-decoration-underline ms-4 mt-3 mb-3">Logout</button>
-                            <div id="logoutdiv">
-                                <div class="text-danger ms-4 fs-6 ">Are you sure you need to logout</div>
-                                <div class="d-flex gap-3 ms-4 ">
-                                    <span class="text-danger spanbody" onclick="logout()">Yes</span>
-                                <span class="text-danger spanbody" onclick="nologout()">No</span>
-                                </div>
-                            </div>
-                            </div>
+
+    <div class="container-fluid adminpage">
+        <header>
+            <div class="logo fs-6 fw-bold p-4">UMS Admin</div>
+
+        </header>
+
+        <nav class="sidebar">
+            <ul>
+                <li>Dashboard</li>
+                <li class="active"><button id="fetchvalue1" onclick="filter('')">Users</button></li>
+                <li><button id="fetchvalue2" onclick="filter('Admin')">Admin</button></li>
+                <li><button id="fetchvalue3" onclick="filter('Employee')">Employee</button></li>
+                <li>
+                    <button class="settings border-0" type="button" data-bs-toggle="offcanvas"
+                        data-bs-target="#offcanvasRight" aria-controls="offcanvasRight" onclick="adminprofile()">
+                        <span class="settings text-light">settings</span>
+                    </button>
+
+                    <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRight"
+                        aria-labelledby="offcanvasRightLabel">
+                        <div class="offcanvas-header">
+                            <h5 id="offcanvasRightLabel"
+                                class="fs-5 fw-bold text-dark text-decoration-underline mt-3 ms-4">Profile Settings</h5>
+                            <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas"
+                                aria-label="Close"></button>
                         </div>
-                    </li>
-                </ul>
+                        <div class="offcanvas-body" id="offcanvasbody ">
+                            <div id="container">
+
+                            </div>
+                            <form onsubmit="passwordreset(event)" id="resetform">
+
+                                <div class="mb-3 text-dark">
+                                    <label for="password">Current Password:</label>
+                                    <input type="password" id="resetpassword" name="password" class="form-control"
+                                        placeholder="Enter Current password" required>
+                                </div>
+
+                                <div class="mb-3 text-dark">
+                                    <label for="newpassword">New Password:</label>
+                                    <input type="password" id="newpassword" name="newpassword" class="form-control"
+                                        placeholder="Enter New password" required>
+                                </div>
+                                <button type="submit" class="editbtn1 mt-2">Submit</button>
+                            </form>
+
+                        </div>
+                    </div>
+                </li>
+                <li> <button onclick="logoutalert()" class="logout-link border-0 text-light">Logout</button>
+                    <div id="logoutdiv">
+                        <div class="text-danger  fs-6 ">Are you sure?</div>
+                        <div class="d-flex gap-3  ">
+                            <span class="text-danger spanbody" onclick="logout()">Yes</span>
+                            <span class="text-danger spanbody" onclick="nologout()">No</span>
+                        </div>
+                    </div>
+                </li>
+            </ul>
         </nav>
+
+        <main>
+
+            <ul class="d-flex adminul">
+                <input type="text" placeholder="Search...">
+                <button onclick="passtoken()" class="border-0 bg-transparent text-light fs-5 fw-bold">Add user</button>
+                <!-- <a class="nav-link text-light text-decoration-none fs-5 fw-bold" href="./index.html">Login Page</a> -->
+
+            </ul>
+
+
+            <div class="row fs-2 fw-bold text-decoration-underline mb-3 ms-4 text-light" id="heading1">Users List</div>
+            <div class="row fs-2 fw-bold text-decoration-underline mb-3 ms-4 text-light" id="heading2">Admin List</div>
+            <div class="row fs-2 fw-bold text-decoration-underline mb-3 ms-4 text-light" id="heading3">Employee List</div>
+            <div class="row ms-4" id="admindatacontainer"></div>
+            <div class="row ms-4" id="filterdatacontainer"></div>
+
+
+
+        </main>
+    </div>
+
+    <div class="container-fluid mt-3 footer">
+        <div class="row">
+            <div class="col-2"></div>
+            <div class="col-2 d-flex flex-column   mt-3">
+                <div class="row text-decoration-underline ps-2">Quick Links</div>
+                <div class="row"><a href="/" class="text-white text-decoration-none">Home</a></div>
+                <div class="row"><a href="/features" class="text-white text-decoration-none">Features</a></div>
+                <div class="row"><a href="/pricing" class="text-white text-decoration-none">Pricing</a></div>
+                <div class="row"><a href="/support" class="text-white text-decoration-none">Support</a></div>
+
+            </div>
+            <div class="col-2 d-flex flex-column   mt-3">
+                <div class="row text-decoration-underline ps-2">Resources</div>
+                <div class="row"><a href="/docs" class="text-white text-decoration-none">Documentation</a></div>
+                <div class="row"><a href="/api" class="text-white text-decoration-none">API Reference</a></div>
+                <div class="row"><a href="/faqs" class="text-white text-decoration-none">FAQs</a></div>
+                <div class="row"><a href="/guides" class="text-white text-decoration-none">User Guides</a></div>
+            </div>
+            <div class="col-2 d-flex flex-column  mt-3">
+                <div class="row text-decoration-underline ps-2">Legal</div>
+                <div class="row"><a href="/privacy" class="text-white text-decoration-none">Privacy Policy</a></div>
+                <div class="row"><a href="/terms" class="text-white text-decoration-none">Terms of Service</a></div>
+                <div class="row"><a href="/blog" class="text-white text-decoration-none">Blog</a></div>
+            </div>
+            <div class="col-2 d-flex flex-column   mt-3">
+                <div class="row text-decoration-underline ps-2">Connect with Us</div>
+                <div class="row"><a href="/contact" class="text-white text-decoration-none">Contact Us</a></div>
+                <div class="row"><a href="" class="text-white text-decoration-none">1-800-123-4567</a></div>
+                <div class="row"><a href="mailto:support@yourcompany.com"
+                        class="text-white text-decoration-none">support@yourcompany.com</a></div>
+            </div>
+            <div class="col-2"></div>
         </div>
-    
+        <div class="row">
+            <div class="col-2"></div>
+            <div class="col border border-secondary border-top"></div>
+            <div class="col-2"></div>
+        </div>
+        <div class="row mt-3">
+            <div class="col-2"></div>
+            <div class="col">Copyright © [Year] [Your Company Name]. All rights reserved.</div>
+            <div class="col-2"></div>
+        </div>
+    </div>
 
 
-        <div class="container-fluid mb-4 shadow-sm p-3 mb-5 bg-body rounded adduser">
+
+    <!-- <div class="container-fluid mb-4 shadow-sm p-3 mb-5 bg-body rounded adduser">
     
             <div class="row">
                 <div class="col-2  umsdiv">
                     <div class="row ">
-                        <!-- <div class="col-2 text-end"><img src="./images/icons8-american-express-30.png" alt=""></div> -->
+                        <div class="col-2 text-end"><img src="./images/icons8-american-express-30.png" alt=""></div>
                         <div class="col fs-4 fw-bold">UMS</div>
                     </div>
                     <div class="row ms-1 fs-6 fw-bold mb-2 mt-3">Dashboard</div>
@@ -88,13 +165,16 @@
                 <div class="col-2"></div>
             </div>
         
-    </div>
+    </div> -->
 
 
 
-<div id="admindatacontainer" class="container mt-4"></div>
+    <!-- <div id="admindatacontainer" class="container mt-4">zdb</div> -->
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
-<script src="script.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+        crossorigin="anonymous"></script>
+    <script src="script.js"></script>
 </body>
+
 </html>
