@@ -217,8 +217,6 @@ async function submitData(dataUrl) {
             return;
         }
 
-
-
     } catch (error) {
         console.log("error : ", error)
     }
@@ -1018,6 +1016,48 @@ async function filter(userType) {
 
     filterdatacontainer.innerHTML = rows;
    
+}
+
+function forgotpass(event) {
+    event.preventDefault();
+    console.log("button clicked");
+    document.getElementById('indexnoneform').style.display = 'block';
+}
+
+async function emailverify(event) {
+    event.preventDefault();
+
+    let email = document.getElementById('forgotemail').value;
+    let data = {
+        email
+    }
+
+    let str_data = JSON.stringify(data);
+
+    try {
+        let response = await fetch('/forgot-password', {
+            method: 'POST',
+            headers: {
+                'Content-Type': "application/json",
+            },
+            body: str_data,
+        })
+        console.log("response : ", response);
+
+        let parsed_response = await response.json();
+        console.log("parsed_response : ", parsed_response);
+
+        if (parsed_response) {
+            alert("Verification mail send to your email");
+            return;
+        } else {
+            alert("user not added");
+            return;
+        }
+
+    } catch (error) {
+        console.log("error : ", error)
+    }
 }
 
 

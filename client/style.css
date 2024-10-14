@@ -1,309 +1,343 @@
-*{
-    margin: 0;
-    padding: 0;
+* {
+  margin: 0;
+  padding: 0;
 }
-body.indexbody {
-    background: linear-gradient(to right, #e9c5e9, #d685df);
-    color: white;
-    min-height: 100vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+
+.indexbody {
+  background: linear-gradient(to right, #e9c5e9, #d685df);
+  color: white;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
-.loginbtn{
-    background-color: #d685df; 
-    border: none;
-    padding: 3px 6px 5px 6px;
-    color: white;
-    border-radius: 3px;
-    font-size: 17px;
-    font-weight: 500;
+
+.index {
+  background: linear-gradient(to right, #e9c5e9, #d685df);
 }
+
+.loginbtn {
+  background-color: #d685df;
+  border: none;
+  padding: 3px 6px 5px 6px;
+  color: white;
+  border-radius: 3px;
+  font-size: 17px;
+  font-weight: 500;
+}
+
 #square {
-    position: relative;
-      width: 800px;
-      height: 450px;
-    display: block;
-    margin: auto;
-      background: #F3F6F8;
-    z-index: 3;
-  }
-      
-  #leftSquare {
-      width: 40%;
-    display: block;
-    margin:  auto;
-      height: 100%;
-    position: absolute;
-    top: 0%;
-    left: 0%;
-      background:linear-gradient(
-        rgba(251, 139, 166, 0.70),
-        rgba(224, 140, 194, 0.8),
-        rgba(194,139,228, 0.9)
-      ),  url("https://images.pexels.com/photos/1852/dawn-landscape-mountains-nature.jpg?h=350&auto=compress");
-    background-size: cover;
-    border-radius: 0%;
-    z-index: 1;
-  }
-  
-  #rightSquare {
-      width: 60%;
-    display: block;
-    margin:  auto;
-      height: 100%;
-    position: absolute;
-    top: 0%;
-    right: 0%;
-      background:none;
-    background-size: cover;
-    border-radius: 0%;
-    z-index: 1;
-  }
-  
-  #circle{
-      border-radius: 50%;
-      width: 60%;
-      height: 40%;
-      display: block;
-      margin: auto;
-      position: absolute;
-      top: 8%;
-      right: 20%;
-    }
-  
-  .brand{
-    position: absolute;
-    display: block;
-    top: 38%;
-    left: 25%;
-    margin: auto;
-    width: 50%;
-    height: 60%;
-    z-index: 1;
-    
-  }
-  #passwordlogin,#emaillogin{
-    width: 85%;
-    margin: auto;
-  }
-  
-  #title{
-    position: absolute;
-    left: 21%;
-    bottom: 37%;
-    color: white;
-    font-family:"lato";
-    font-size: 20px;
-    font-weight: 800;
-    text-align: center;
-    z-index: 3;
-  }
-  #subtitle{
-    position: absolute;
-    left: 7%;
-    bottom: 32%;
-    color: white;
-    font-family:"lato";
-    font-size: 13px;
-    font-weight: 400;
-    text-align: center;
-    z-index: 3;
-  }
-  
-  #container{
-    
-      margin-top: 15%;
-  }
-  
-  .signup{
-    color: rgb(228, 162, 208);
-    font-family:"lato";
-    font-size: 2em;
-    font-weight: 800;
-    text-align: center;
-    text-transform: uppercase;
-    z-index: 3;
-  }
-  
-  .button{
-    display: block;
-    margin: auto;
-    margin-bottom: 20px;
-    z-index: 3;
-    background: #2BA0EE;
-  }
-  
-  #twitter{
-    
-    padding-left: 10px;
-  }
-  
-  #footer{
-    display: block;
-    margin: auto;
-    color: #333333;
-    font-family:"lato";
-    font-size: 15px;
-    font-weight: 400;
-    text-align: center;
-    z-index: 3;
-  }
-  
-  #terms{
-    cursor: pointer;
-    color: #FBADC1;
-  }
-  
-  
-  form{
-    
-    padding: 20px 0;
-    position: relative;
-  }
-  
-  .optin{
-    
-     -webkit-appearance: none;
-       -moz-appearance: none;
-            appearance: none;
-    outline: 0;
-    border: 1px solid rgba(255, 255, 255, 0.8);
-    background-color: rgba(255, 255, 255, 0.8);
-    width: 75%;
-    margin: auto;
-    display: block;
-    margin-bottom: 10px;
-    border-radius: 3px;
-    padding: 10px 15px;
-    text-align: left;
-    font-size: 18px;
-    color: #333333;
-    -webkit-transition-duration: 0.25s;
-            transition-duration: 0.25s;
-    font-weight: 300;    
-  }
-  .optin:hover{
-      background-color: rgba(255, 255, 255, 0.4);
-  }
-  .optin:focus {
-    background-color: white;
-    width: 90%;
-    color: #CD98E3;
-  }
-.adduser {
-    font-family: 'Arial', sans-serif;
-    margin: 0;
-    padding: 0;
-    background: linear-gradient(to right, #e9c5e9, #d685df);
-    color: #eaeaea;
-    height: 100vh;
+  position: relative;
+  width: 800px;
+  height: 450px;
+  display: block;
+  margin: auto;
+  background: #F3F6F8;
+  z-index: 3;
 }
-#userForm{
-    display: flex;
-    flex-direction: column;
+
+#leftSquare {
+  width: 40%;
+  display: block;
+  margin: auto;
+  height: 100%;
+  position: absolute;
+  top: 0%;
+  left: 0%;
+  background: linear-gradient(rgba(251, 139, 166, 0.70),
+      rgba(224, 140, 194, 0.8),
+      rgba(194, 139, 228, 0.9)), url("https://images.pexels.com/photos/1852/dawn-landscape-mountains-nature.jpg?h=350&auto=compress");
+  background-size: cover;
+  border-radius: 0%;
+  z-index: 1;
+}
+
+#rightSquare {
+  width: 60%;
+  display: block;
+  margin: auto;
+  height: 100%;
+  position: absolute;
+  top: 0%;
+  right: 0%;
+  background: none;
+  background-size: cover;
+  border-radius: 0%;
+  z-index: 1;
+}
+
+#circle {
+  border-radius: 50%;
+  width: 60%;
+  height: 40%;
+  display: block;
+  margin: auto;
+  position: absolute;
+  top: 8%;
+  right: 20%;
+}
+
+.brand {
+  position: absolute;
+  display: block;
+  top: 38%;
+  left: 25%;
+  margin: auto;
+  width: 50%;
+  height: 60%;
+  z-index: 1;
+
+}
+
+#passwordlogin,
+#emaillogin,
+.forgetpass {
+  width: 85%;
+  margin: auto;
+}
+
+.forgetpass {
+  background-color: transparent;
+  border: none;
+  text-decoration: underline;
+  color: #CD98E3;
+}
+
+#title {
+  position: absolute;
+  left: 21%;
+  bottom: 37%;
+  color: white;
+  font-family: "lato";
+  font-size: 20px;
+  font-weight: 800;
+  text-align: center;
+  z-index: 3;
+}
+
+#subtitle {
+  position: absolute;
+  left: 7%;
+  bottom: 32%;
+  color: white;
+  font-family: "lato";
+  font-size: 13px;
+  font-weight: 400;
+  text-align: center;
+  z-index: 3;
+}
+
+#container {
+
+  margin-top: 15%;
+}
+
+.signup {
+  color: rgb(228, 162, 208);
+  font-family: "lato";
+  font-size: 2em;
+  font-weight: 800;
+  text-align: center;
+  text-transform: uppercase;
+  z-index: 3;
+}
+
+.button {
+  display: block;
+  margin: auto;
+  margin-bottom: 20px;
+  z-index: 3;
+  background: #2BA0EE;
+}
+
+#twitter {
+
+  padding-left: 10px;
+}
+
+#footer {
+  display: block;
+  margin: auto;
+  color: #333333;
+  font-family: "lato";
+  font-size: 15px;
+  font-weight: 400;
+  text-align: center;
+  z-index: 3;
+}
+
+#terms {
+  cursor: pointer;
+  color: #FBADC1;
+}
+
+
+form {
+
+  padding: 20px 0;
+  position: relative;
+}
+
+.optin {
+
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  outline: 0;
+  border: 1px solid rgba(255, 255, 255, 0.8);
+  background-color: rgba(255, 255, 255, 0.8);
+  width: 75%;
+  margin: auto;
+  display: block;
+  margin-bottom: 10px;
+  border-radius: 3px;
+  padding: 10px 15px;
+  text-align: left;
+  font-size: 18px;
+  color: #333333;
+  -webkit-transition-duration: 0.25s;
+  transition-duration: 0.25s;
+  font-weight: 300;
+}
+
+.optin:hover {
+  background-color: rgba(255, 255, 255, 0.4);
+}
+
+.optin:focus {
+  background-color: white;
+  width: 90%;
+  color: #CD98E3;
+}
+
+.adduser {
+  font-family: 'Arial', sans-serif;
+  margin: 0;
+  padding: 0;
+  background: linear-gradient(to right, #e9c5e9, #d685df);
+  color: #eaeaea;
+  height: 100vh;
+}
+
+#userForm {
+  display: flex;
+  flex-direction: column;
 }
 
 .form-container1 {
-    margin: auto;
-    margin-top: 6%;
-    background-image: url('./images/WhatsApp\ Image\ 2024-10-09\ at\ 12.32.24_0a5cc346.jpg');
-    color: black;
-    padding: 30px;
-    border-radius: 10px;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
-    width: 100%;
-    max-width: 400px;
-    transition: all 0.3s ease;
+  margin: auto;
+  margin-top: 6%;
+  background-image: url('./images/WhatsApp\ Image\ 2024-10-09\ at\ 12.32.24_0a5cc346.jpg');
+  color: black;
+  padding: 30px;
+  border-radius: 10px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+  width: 100%;
+  max-width: 400px;
+  transition: all 0.3s ease;
 }
 
 .form-container1 h2 {
-    text-align: center;
-    margin-bottom: 20px;
-    animation: fadeIn 0.5s;
+  text-align: center;
+  margin-bottom: 20px;
+  animation: fadeIn 0.5s;
 }
-.adduserbtn,.adminupdatebtn,.employeeupdatebtn,.editbtn{
-    width: 25%;
-    background-color: #d685df; 
-    border: none;
-    padding: 3px 6px 5px 6px;
-    color: white;
-    border-radius: 3px;
-    font-size: 17px;
-    font-weight: 500;
+
+.adduserbtn,
+.adminupdatebtn,
+.employeeupdatebtn,
+.editbtn {
+  width: 25%;
+  background-color: #d685df;
+  border: none;
+  padding: 3px 6px 5px 6px;
+  color: white;
+  border-radius: 3px;
+  font-size: 17px;
+  font-weight: 500;
 }
-.editbtn{
-    width: 25%;
-    background-color: #d685df; 
-    border: none;
-    padding: 3px 3px 3px 3px;
-    color: white;
-    border-radius: 3px;
-    font-size: 17px;
-    font-weight: 500;
+
+.editbtn {
+  width: 25%;
+  background-color: #d685df;
+  border: none;
+  padding: 3px 3px 3px 3px;
+  color: white;
+  border-radius: 3px;
+  font-size: 17px;
+  font-weight: 500;
 }
-.editbtn1{
+
+.editbtn1 {
   width: 40%;
-    background-color: #d685df; 
-    border: none;
-    padding: 2px;
-    color: white;
-    border-radius: 3px;
-    font-size: 14px;
-    font-weight: 500;
+  background-color: #d685df;
+  border: none;
+  padding: 2px;
+  color: white;
+  border-radius: 3px;
+  font-size: 14px;
+  font-weight: 500;
 }
 
-.editbtn2{
+.editbtn2 {
   width: 50%;
-    background-color: #d685df; 
-    border: none;
-    padding: 2px;
-    color: white;
-    border-radius: 3px;
-    font-size: 14px;
-    font-weight: 500;
+  background-color: #d685df;
+  border: none;
+  padding: 2px;
+  color: white;
+  border-radius: 3px;
+  font-size: 14px;
+  font-weight: 500;
 }
 
-.profileimg{
-    width: 30px;
+.profileimg {
+  width: 30px;
 }
-.singleemployeecontainer{
+
+.singleemployeecontainer {
   width: 50px;
 }
-.singleemployeecontainerimg{
+
+.singleemployeecontainerimg {
   width: 100px;
   border-radius: 100%;
 }
-.singleusercontainerimg{
+
+.singleusercontainerimg {
   width: 200px;
 }
+
 .www {
   animation: fadeIn 1s ease-in-out;
 }
-#resetform{
+
+#resetform {
   display: none;
   width: 75%;
   margin-left: 8%;
 }
 
 .singleusercontainerimg {
-  border-radius: 50%; /* Optional: Makes the image circular */
+  border-radius: 50%;
+  /* Optional: Makes the image circular */
   transition: transform 0.3s ease;
 }
 
 .logout-link {
-  background-color: #333; 
-  color: white; 
-  border: none; 
+  background-color: #333;
+  color: white;
+  border: none;
   border-radius: 5px;
-  cursor: pointer; 
+  cursor: pointer;
 }
+
 .logout-link1 {
- color: rgb(230, 18, 18);
- background-color: transparent; 
-  border: none; 
+  color: rgb(230, 18, 18);
+  background-color: transparent;
+  border: none;
   border-radius: 5px;
-  cursor: pointer; 
+  cursor: pointer;
 }
 
 #logoutdiv {
@@ -312,11 +346,11 @@ body.indexbody {
   padding: 10px;
   border: 1px solid #dc3545;
   background-color: #f8d7da;
-  border-radius: 5px; 
+  border-radius: 5px;
 }
 
 .text-danger {
-  color: #dc3545; 
+  color: #dc3545;
   font-weight: bold;
 }
 
@@ -330,25 +364,33 @@ body.indexbody {
   background-color: rgba(220, 53, 69, 0.1);
 }
 
-.morebtn{
+.morebtn {
   border-radius: 5px;
-  border:1px solid white;
+  border: 1px solid white;
 }
-#offcanvasbody,#offcanvasRight{
-  background: linear-gradient(to right,#e4d1e6, #fafafa);
+
+#offcanvasbody,
+#offcanvasRight {
+  background: linear-gradient(to right, #e4d1e6, #fafafa);
 }
-.offcanvas{
-width: 17%;}
-.umsdiv{
+
+.offcanvas {
+  width: 17%;
+}
+
+.umsdiv {
   height: 100vh;
-  background: linear-gradient(to right,#e4d1e6, #fafafa);
+  background: linear-gradient(to right, #e4d1e6, #fafafa);
 }
-.adminDatacontainerimg{
+
+.adminDatacontainerimg {
   width: 60px;
 }
+
 .adminpage {
   display: flex;
 }
+
 header {
   background-color: #16ffbd;
   color: white;
@@ -372,13 +414,15 @@ header {
   padding: 0;
 }
 
-.sidebar li{
+.sidebar li {
   padding: 10px 20px;
   cursor: pointer;
 }
-.settings{
+
+.settings {
   background-color: #333;
 }
+
 .sidebar li.active {
   background-color: #16ffbd;
 }
@@ -428,23 +472,30 @@ main {
 .text-danger {
   color: red;
 }
-.footer{
+
+.footer {
   background-color: #333;
 }
-#fetchvalue2,#fetchvalue3{
-background-color: #333;
-border: none;
-color: white;
+
+#fetchvalue2,
+#fetchvalue3 {
+  background-color: #333;
+  border: none;
+  color: white;
 }
-#fetchvalue1{
-  background-color:#16ffbd;
-border: none;
-color: white;
+
+#fetchvalue1 {
+  background-color: #16ffbd;
+  border: none;
+  color: white;
 }
-#filterdatacontainer{
-display: none;
+
+#filterdatacontainer {
+  display: none;
 }
-#heading3,#heading2{
+
+#heading3,
+#heading2 {
   display: none;
 }
 
@@ -479,7 +530,7 @@ label {
   text-align: left;
 }
 
-.resetpassword{
+.resetpassword {
   width: 100%;
   padding: 10px;
   margin-bottom: 15px;
@@ -501,23 +552,54 @@ label {
   background-color: #c2185b;
 }
 
+#indexnoneform {
+  width: 52%;
+  margin: auto;
+  display: none;
+  /* background-color: white; */
+  padding: 20px;
+  border-radius: 5px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+#forgotemail{
+  color: black;
+  border: none;
+}
+.forgotbtn{
+  background: #9e54bd;
+  border: none;
+  color: white;
+  margin-left: 3%;
+  border-radius: 5px;
+  padding-left: 3px;
+  padding-right: 3px;
+  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+}
+
+
+
+
+
 
 
 @keyframes fadeIn {
   from {
-      opacity: 0;
-      transform: translateY(20px);
+    opacity: 0;
+    transform: translateY(20px);
   }
+
   to {
-      opacity: 1;
-      transform: translateY(0);
+    opacity: 1;
+    transform: translateY(0);
   }
 }
+
 @keyframes fadeIn {
   from {
-      opacity: 0;
+    opacity: 0;
   }
+
   to {
-      opacity: 1;
+    opacity: 1;
   }
 }
