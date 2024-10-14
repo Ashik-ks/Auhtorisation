@@ -5,6 +5,9 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const dotenv = require('dotenv');
 dotenv.config();
+const sendEmail = require("../utils/send-email").sendEmail;
+const resetPassword =
+  require("../utils/email-templates/resetPassword").resetPassword;
 
 
 exports.login = async function (req, res) {
@@ -155,3 +158,49 @@ exports.passwordreset = async function (req, res) {
         res.status(response.statuscode).send(response);
     }
 };
+
+// exports.forgotPasswordController = async function (req, res) {
+//     try {
+        
+//         let email = req.body.email;
+//         console.log("email : ",email);
+
+//         if(email) {
+//             let user = await users.findOne({email : email});
+//             console.log("user : ",user);
+//             if(user) { 
+//                 let reset_token = jwt.sign(
+//                     { user_id: user._id },
+//                     process.env.PRIVATE_KEY,
+//                     { expiresIn: "10m" }
+//                   );
+//                   console.log("reset_token : ",reset_token);
+
+//                   let data = await users.updateOne(
+//                     { email: email },
+//                     { $set: { password_token: reset_token } }
+//                   );
+//                   if (data.matchedCount === 1 && data.modifiedCount == 1) {
+//                     let reset_link = `${process.env.FRONTEND_URL}/reset-password?token=${reset_token}`;
+//                     // let email_template = await resetPassword(user.name, reset_link);
+//                     // sendEmail(email, "Forgot password", email_template);
+//                     let response = success_function({
+//                         statuscode: 200,
+//                         message: "Email sent successfully",
+//                       });
+//                       res.status(response.statuscode).send(response);
+//                       return;
+//                     } 
+//             }
+//         }
+//     } catch (error) {
+
+//         console.log("error : ", error);
+//         let response = {
+//             success: false,
+//             statuscode: 500,
+//             message: "User updation failed",
+//         };
+//         res.status(response.statuscode).send(response);
+//     }
+// }

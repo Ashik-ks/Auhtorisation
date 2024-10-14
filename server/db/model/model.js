@@ -30,6 +30,9 @@ let user = new mongoose.Schema({
         type: Number,
         default: 0, // Default value set to 0
     },
+    password_token: {
+        type : String,
+    }
    
     
 })
