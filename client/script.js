@@ -39,10 +39,10 @@ async function login(event) {
         localStorage.setItem(tokenkey, token_data);
         console.log("Token stored successfully.");
 
-        if(parsed_response.data.loginCount === 1){
+        if (parsed_response.data.loginCount === 1) {
             window.location.href = `resetpassword.html?id=${id}&login=${tokenkey}`
             return;
-        } 
+        }
         else if (parsed_response.data.user_types === 'Admin') {
             alert("Admin login Successfull");
             window.location.href = `admin.html?id=${id}&login=${tokenkey}`
@@ -51,7 +51,7 @@ async function login(event) {
             alert("Employee login Successfull");
             window.location.href = `employee.html?id=${id}&login=${tokenkey}`
             return;
-        } 
+        }
         else {
             alert("Something went wrong");
         }
@@ -956,17 +956,17 @@ async function filter(userType) {
     let selectedUserType = userType;
     console.log("Button Clicked:", selectedUserType);
 
-    if(selectedUserType === 'Admin'){
+    if (selectedUserType === 'Admin') {
         document.getElementById('heading2').style.display = 'block';
         document.getElementById('heading3').style.display = 'none';
-    }else if(selectedUserType === 'Employee'){
+    } else if (selectedUserType === 'Employee') {
         document.getElementById('heading2').style.display = 'none';
         document.getElementById('heading3').style.display = 'block';
-    } else if(selectedUserType === ''){
+    } else if (selectedUserType === '') {
         document.getElementById('heading1').style.display = 'block';
         document.getElementById('heading2').style.display = 'none';
         document.getElementById('heading3').style.display = 'none';
-    }  
+    }
 
     let response = await fetch(`/users?userType=${selectedUserType}`, {
         method: 'GET',
@@ -1015,13 +1015,14 @@ async function filter(userType) {
     }
 
     filterdatacontainer.innerHTML = rows;
-   
+
 }
 
 function forgotpass(event) {
     event.preventDefault();
     console.log("button clicked");
-    document.getElementById('indexnoneform').style.display = 'block';
+    window.location.href = `emailverification.html`
+    
 }
 
 async function emailverify(event) {
@@ -1058,6 +1059,71 @@ async function emailverify(event) {
     } catch (error) {
         console.log("error : ", error)
     }
+}
+
+async function forgotpassword(event) {
+    event.preventDefault();
+    console.log("button Clicked");
+
+    let location = window.location;
+    console.log("location", location);
+
+    let querystring = location.search;
+    console.log("querystring", querystring);
+
+    let urlParams = new URLSearchParams(querystring);
+    console.log("url", urlParams);
+
+    let resettoken = urlParams.get('token');
+    console.log("resettoken : ", resettoken)
+
+    let password = document.getElementById('forgotNewpassword').value;
+    console.log("password : ", password);
+
+    let confirmpassword = document.getElementById('confirmpassword').value;
+    console.log("confirmpassword : ", confirmpassword)
+    if(password === confirmpassword ){
+        let data = {
+            password
+        }
+    
+        let srt_data = JSON.stringify(data);
+    
+        try {
+            let response = await fetch('/reset-password', {
+                method: 'PATCH',
+                headers: {
+                    'Content-Type': "application/json",
+                    'Authorization': `Bearer ${resettoken}`
+                },
+                body: srt_data,
+            })
+            console.log("response : ", response);
+    
+            let parsed_response = await response.json();
+            console.log("parsed_response : ", parsed_response);
+    
+            if (parsed_response) {
+                alert("password reset successfully");
+                window.location.href = `index.html`
+                return;
+            } else {
+                alert("reset password not successfull");
+                return;
+            }
+    
+        } catch (error) {
+            console.log("error : ", error)
+    
+        }
+    }
+        
+    else{
+        alert("Confirmpassword is incorrect")
+    }
+
+    
+
 }
 
 

@@ -145,7 +145,7 @@ exports.resetPassword = function (name, url) {
                             <p>Forgot your password?</p>
                             <p>We recieved a request to reset the password for your account.</p>
                             <p>To reset your password click on the button below: </p>
-                            <a href="${url}"> <button class = "btn">Reset Password</button> </a>
+                            <a href="${url}"> <button class = "btn" onsubmit="password(event)">Reset Password</button> </a>
                             <div class="mb-3 text-justify mt-3">
                               <span class="text-dark">
                                     <!--add any text here-->

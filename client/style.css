@@ -553,18 +553,17 @@ label {
 }
 
 #indexnoneform {
-  width: 52%;
+  width: 100%;
   margin: auto;
-  display: none;
   /* background-color: white; */
   padding: 20px;
   border-radius: 5px;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
 }
 #forgotemail{
+  width: 100%;
   color: black;
-  border: none;
-}
+margin-bottom: 7px;}
 .forgotbtn{
   background: #9e54bd;
   border: none;
