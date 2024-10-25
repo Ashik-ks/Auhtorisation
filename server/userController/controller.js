@@ -15,10 +15,6 @@ exports.Adduser = async function (req, res) {
         let body = req.body;
         console.log("bodys : ", body);
 
-        let user_Type = await userType.findOne({ userType: req.body.userType });
-        body.userType = user_Type._id
-
-
         function generateRandomNumber(length) {
             var charset = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
             var password = "";
@@ -45,11 +41,11 @@ exports.Adduser = async function (req, res) {
         console.log("hashedpassword : ", hashedpassword);
 
         let image = body.image;
-        console.log("image : ", image)
+        // console.log("image : ", image)
 
         if (image) {
             let img_path = await fileUpload(image, "Users");
-            console.log("img_path", img_path);
+            // console.log("img_path", img_path);
             body.image = img_path
         }
 
@@ -107,42 +103,14 @@ exports.Adduser = async function (req, res) {
 
 exports.GetAlluser = async function (req, res) {
     try {
-        console.log("Request Query: ", req.query);
+        const findUser = await users.find({ userType: { $eq: "Employee" } });
+        console.log("findUser: ", findUser);
 
-        const userType = req.query.userType;
-        console.log("User Type: ", userType);
-
-        // If userType is provided, find it in the database
-        let users_Data;
-
-        if (userType) {
-            const findUserType = await userTypes.findOne({ userType }).populate("userType");
-            console.log("Found User Type: ", findUserType);
-
-            if (!findUserType) {
-                return res.status(404).send({
-                    success: false,
-                    statuscode: 404,
-                    message: "User type not found",
-                });
-            }
-
-            const id = findUserType._id;
-            console.log("User Type ID: ", id);
-
-            // Fetch users based on the found user type
-            users_Data = await users.find({ userType: id }).populate("userType");
-        } else {
-            // If no userType is specified, fetch all users
-            users_Data = await users.find().populate("userType");
-        }
-
-        // Prepare the response object
         const response = {
             success: true,
             statuscode: 200,
             message: "Users fetched successfully",
-            data: users_Data,
+            data: findUser, // Use findUser here
         };
 
         // Send the response
@@ -190,73 +158,59 @@ exports.GetSingleuser = async function (req, res) {
 }
 
 exports.edituser = async function (req, res) {
-
     try {
-        let body = req.body;
-        console.log("body:", body);
-    
-        let _id = req.params.id;
-        console.log("_id:", _id);
-    
-        let findUserType = await userType.findOne({ userType: body.userType }).populate("userType");
-        if (!findUserType) {
-            return res.status(400).send({ success: false, message: "User type not found." });
-        }
-        console.log("findUserType:", findUserType);
-    
-        let userType_id = findUserType._id;
-        console.log("userType_id:", userType_id);
-    
+        const body = req.body;
+        const _id = req.params.id;
+
+        console.log("Request body:", body);
+        console.log("User ID:", _id);
+
+        // Hash password if provided
         if (body.password) {
-            let salt = bcrypt.genSaltSync(10);
-            console.log("salt:", salt);
-    
-            const hashedPassword = bcrypt.hashSync(body.password, salt);
-            console.log("hashedPassword:", hashedPassword);
-            body.password = hashedPassword;
+            const salt = bcrypt.genSaltSync(10);
+            body.password = bcrypt.hashSync(body.password, salt);
+            console.log("Password hashed successfully.");
         }
-    
-        body.userType = userType_id;
-    
+
         let splittedImg;
-    
+
+        // Handle image upload if provided
         if (body.image) {
-            const imagePath = await users.findOne({ _id });
-            if (imagePath) {
-                splittedImg = imagePath.image.split('/')[2];
-                console.log("splittedImg:", splittedImg);
+            const existingUser = await users.findOne({ _id });
+            if (existingUser) {
+                splittedImg = existingUser.image.split('/')[2];
+                console.log("Existing image path segment:", splittedImg);
             } else {
                 console.log("User not found for image path.");
             }
-    
-            const image = body.image;
-            console.log("image:", image);
-    
-            const img_path = await fileUpload(image, "Users");
-            console.log("img_path:", img_path);
+
+            const img_path = await fileUpload(body.image, "Users");
             body.image = img_path;
+            console.log("New image path:", img_path);
         }
-    
+
+        // Update user in the database
         const updateUser = await users.updateOne({ _id }, { $set: body });
-        console.log("updateUser:", updateUser);
-    
+        console.log("Update result:", updateUser);
+
+        // Delete old image if it exists
         if (body.image && splittedImg) {
             const imagePathToDelete = path.join('./uploads', 'Users', splittedImg);
             await fileDelete(imagePathToDelete);
+            console.log("Old image deleted:", imagePathToDelete);
         }
-    
-        const response = success_function({
+
+        const response = {
             success: true,
             statuscode: 200,
             message: "User updated successfully",
             data: updateUser,
-        });
-    
+        };
+
         res.status(response.statuscode).send(response);
-        return;
-    
+
     } catch (error) {
-        console.error("Error:", error);
+        console.error("Error during user update:", error);
         const response = {
             success: false,
             statuscode: 500,
@@ -265,8 +219,7 @@ exports.edituser = async function (req, res) {
         };
         res.status(response.statuscode).send(response);
     }
-    
-}
+};
 
 exports.Deleteuser = async function (req, res) {
     try {

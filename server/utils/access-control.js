@@ -53,10 +53,10 @@ exports.accessControl = async function (access_types,req,res,next) {
                         // req.params = user_id;
                         // console.log("req.params : ",req.params)
 
-                        let user = await login.findOne({_id : user_id}).populate("userType");
+                        let user = await login.findOne({_id : user_id});
                         console.log("user : ",user);
 
-                        let user_type = user.userType.userType;
+                        let user_type = user.userType;
                         console.log("user_type : ",user_type);
 
                         let allowed = access_types.split(",").map((obj) => control_data[obj] );

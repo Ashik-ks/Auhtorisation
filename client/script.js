@@ -39,22 +39,29 @@ async function login(event) {
         localStorage.setItem(tokenkey, token_data);
         console.log("Token stored successfully.");
 
-        if (parsed_response.data.loginCount === 1) {
-            window.location.href = `resetpassword.html?id=${id}&login=${tokenkey}`
+        if (parsed_response.data.loginCount === 0) {
+            // If login count is 0, redirect to reset password page
+            window.location.href = `resetpassword.html?id=${id}&login=${tokenkey}`;
             return;
-        }
-        else if (parsed_response.data.user_types === 'Admin') {
-            alert("Admin login Successfull");
-            window.location.href = `admin.html?id=${id}&login=${tokenkey}`
-            return;
-        } else if (parsed_response.data.user_types === 'Employee') {
-            alert("Employee login Successfull");
-            window.location.href = `employee.html?id=${id}&login=${tokenkey}`
-            return;
-        }
-        else {
+        } else if (parsed_response.data.loginCount >= 1) {
+            // If login count is 1 or more, check user type and redirect
+            if (parsed_response.data.user_types === 'Admin') {
+                alert("Admin login successful");
+                window.location.href = `admin.html?id=${id}&login=${tokenkey}`;
+                return;
+            } else if (parsed_response.data.user_types === 'Employee') {
+                alert("Employee login successful");
+                window.location.href = `employee.html?id=${id}&login=${tokenkey}`;
+                return;
+            } else {
+                alert("Unknown user type. Please contact support.");
+                return;
+            }
+        } else {
             alert("Something went wrong");
         }
+        
+        
 
     } catch (error) {
         console.log("error : ,error")
@@ -103,28 +110,29 @@ async function getusers() {
         let id = data[i]._id;
         rows = rows + `
 
-          <div class="container mb-4 bg-white shadow-sm p-3 mb-5 bg-body rounded">
-    
-       <div class="row d-flex justify-content-center align-items-center">
-                        
-                        <div class="col text-center" onclick="handleClick('${id}','${tokenkey}')">
-                            <img src="${data[i].image}" class="adminDatacontainerimg" alt="User Image">
-                        </div>
-                        <div class="col text-center text-dark" style="font-size: 18px; font-weight: 700;">
-                            ${data[i].name}
-                        </div>
-                        <div class="col fs-5 fw-bold text-center text-dark" style="font-size: 18px; font-weight: 700;">
-                            ${data[i].email}
-                        </div>
-                        <div class="col text-center">
-                            <button class="editbtn" onclick="handleClickEdit('${id}','${tokenkey}')">Edit</button>
-                        </div>
-                        <div class="col text-center">
-                            <img src="./images/icons8-delete-30.png" alt="Delete" id="deleteimg" onclick="handleClickDelete('${id}','${tokenkey}')">
-                        </div>
-                    </div>
-    
+          <div class="container mb-4 bg-white shadow-sm p-3 rounded">
+    <div class="row d-flex justify-content-center align-items-center">
+        <div class="col text-center">
+            <img src="${data[i].image}" class="adminDatacontainerimg" alt="User Image">
+        </div>
+        <div class="col text-center text-dark" style="font-size: 18px; font-weight: 700;">
+            ${data[i].name}
+        </div>
+        <div class="col fs-5 fw-bold text-center text-dark" style="font-size: 18px; font-weight: 700;">
+            ${data[i].email}
+        </div>
+        <div class="col text-center">
+            <button class="editbtn" onclick="handleClickEdit('${data[i]._id}', '${tokenkey}')">Edit</button>
+        </div>
+        <div class="col text-center">
+            <button class="editbtn" onclick="handleClick('${data[i]._id}', '${tokenkey}')">View</button>
+        </div>
+        <div class="col text-center">
+            <img src="./images/icons8-delete-30.png" alt="Delete" id="deleteimg" onclick="handleClickDelete('${data[i]._id}', '${tokenkey}')">
+        </div>
+    </div>
 </div>
+
         `
     }
 
@@ -707,6 +715,12 @@ async function adminprofile() {
     <div class="container ">
     <div class="row d-flex flex-column ">
         <div class="text-center"><img src="${data[i].image}" class="singleemployeecontainerimg mb-4"> </div>
+        <div class="col text-center text-dark" style="font-size: 18px; font-weight: 700;">
+            ${data[i].name}
+        </div>
+        <div class="col mb-3 text-center text-dark" style="font-size: 18px; font-weight: 700;">
+            ${data[i].email}
+        </div>
         <button class="ms-4  mt-2 mb-1 editbtn1" onclick="handleClickEdit('${id}','${tokenkey}')">Edit Settings</button>
         <button class="ms-4 mt-2 editbtn2" onclick="handleClickreset('${id}','${tokenkey}')">Password reset</button>
 </div>
@@ -770,24 +784,18 @@ async function passwordreset(event) {
     event.preventDefault();
 
     let params = new URLSearchParams(window.location.search);
-    console.log("params", params);
-
-    let id = params.get('id')
-    console.log("reset id", id);
-
-    let tokenkey = params.get('login')
-    console.log("reset tokenkey", tokenkey);
-
+    let id = params.get('id');
+    let tokenkey = params.get('login');
     let token = localStorage.getItem(tokenkey);
-    console.log("resettoken:", token);
 
+    // Collecting passwords from input fields
     let password = document.getElementById('resetpassword').value;
     let newpassword = document.getElementById('newpassword').value;
 
     let datas = {
         password,
         newpassword
-    }
+    };
 
     let strDatas = JSON.stringify(datas);
 
@@ -799,23 +807,24 @@ async function passwordreset(event) {
                 'Authorization': `Bearer ${token}`
             },
             body: strDatas
+        });
 
-        })
         let parsed_resetResponse = await resetResponse.json();
         console.log('parsed_resetResponse', parsed_resetResponse);
 
-        window.location.href = window.location.href;
-
-
-        if (parsed_resetResponse) {
-            alert("Password reset Successfully")
+        if (parsed_resetResponse.success) {
+            alert("Password reset successfully");
+            window.location.href = `index.html`;
+        } else {
+            alert(parsed_resetResponse.message || "Failed to reset password");
         }
 
     } catch (error) {
         console.log("error", error);
+        alert("An error occurred. Please try again.");
     }
-
 }
+
 
 //to pass token key
 function passtoken() {
@@ -846,7 +855,7 @@ function passtoken1() {
     let urlParams = new URLSearchParams(querystring);
     console.log("url", urlParams);
 
-    let tokenkey = urlParams.get('loginid');
+    let tokenkey = urlParams.get('login');
     console.log("tokenkeysingle : ", tokenkey)
 
     let id = urlParams.get('id');
@@ -926,96 +935,6 @@ function logout() {
 }
 function nologout() {
     window.location = window.location.href;
-}
-
-//filter
-async function filter(userType) {
-
-    document.getElementById('admindatacontainer').style.display = 'none';
-    document.getElementById('filterdatacontainer').style.display = 'block';
-    document.getElementById('heading1').style.display = 'none';
-
-    let location = window.location;
-    console.log("Location:", location);
-
-    let querystring = location.search;
-    console.log("Query String:", querystring);
-
-    let urlParams = new URLSearchParams(querystring);
-    console.log("URL Params:", urlParams);
-
-    let id = urlParams.get("id");
-    console.log("ID:", id, typeof id);
-
-    let tokenkey = urlParams.get('login');
-    console.log("Token Key:", tokenkey);
-
-    let token = localStorage.getItem(tokenkey);
-    console.log("Token:", token);
-
-    let selectedUserType = userType;
-    console.log("Button Clicked:", selectedUserType);
-
-    if (selectedUserType === 'Admin') {
-        document.getElementById('heading2').style.display = 'block';
-        document.getElementById('heading3').style.display = 'none';
-    } else if (selectedUserType === 'Employee') {
-        document.getElementById('heading2').style.display = 'none';
-        document.getElementById('heading3').style.display = 'block';
-    } else if (selectedUserType === '') {
-        document.getElementById('heading1').style.display = 'block';
-        document.getElementById('heading2').style.display = 'none';
-        document.getElementById('heading3').style.display = 'none';
-    }
-
-    let response = await fetch(`/users?userType=${selectedUserType}`, {
-        method: 'GET',
-        headers: {
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${token}`
-        },
-    });
-
-    let parsed_response = await response.json();
-    console.log("Parsed Response:", parsed_response);
-
-    let data = parsed_response.data;
-    console.log("Data:", data);
-
-    let filterdatacontainer = document.getElementById("filterdatacontainer");
-    let rows = ''
-
-    for (i = 0; i < data.length; i++) {
-        let id = data[i]._id;
-        rows = rows + `
-
-          <div class="container mb-4 bg-white shadow-sm p-3 mb-5 bg-body rounded">
-    
-       <div class="row d-flex justify-content-center align-items-center">
-                        
-                        <div class="col text-center" onclick="handleClick('${id}','${tokenkey}')">
-                            <img src="${data[i].image}" class="adminDatacontainerimg" alt="User Image">
-                        </div>
-                        <div class="col text-center text-dark" style="font-size: 18px; font-weight: 700;">
-                            ${data[i].name}
-                        </div>
-                        <div class="col fs-5 fw-bold text-center text-dark" style="font-size: 18px; font-weight: 700;">
-                            ${data[i].email}
-                        </div>
-                        <div class="col text-center">
-                            <button class="editbtn" onclick="handleClickEdit('${id}','${tokenkey}')">Edit</button>
-                        </div>
-                        <div class="col text-center">
-                            <img src="./images/icons8-delete-30.png" alt="Delete" id="deleteimg" onclick="handleClickDelete('${id}','${tokenkey}')">
-                        </div>
-                    </div>
-    
-</div>
-        `
-    }
-
-    filterdatacontainer.innerHTML = rows;
-
 }
 
 function forgotpass(event) {
@@ -1125,5 +1044,4 @@ async function forgotpassword(event) {
     
 
 }
-
 

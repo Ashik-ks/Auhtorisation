@@ -1,11 +1,11 @@
-const mongoose = require('mongoose');
+// const mongoose = require('mongoose');
 
-let userSchema = new mongoose.Schema({
-    userType: {
-        type :String,
-        // required : true,
-    },
+// let userSchema = new mongoose.Schema({
+//     userType: {
+//         type :String,
+//         // required : true,
+//     },
     
-})
+// })
 
-module.exports = mongoose.model("userType", userSchema);
+// module.exports = mongoose.model("userType", userSchema);

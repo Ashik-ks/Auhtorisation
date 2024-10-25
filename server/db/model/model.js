@@ -23,8 +23,7 @@ let user = new mongoose.Schema({
         // required : true,
     },
     userType : {
-        type : mongoose.Schema.Types.ObjectId,
-        ref : "userType" 
+        type : String,
     },
     loginCount: {
         type: Number,
