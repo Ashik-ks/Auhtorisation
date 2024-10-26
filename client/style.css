@@ -16,7 +16,9 @@
 .index {
   background: linear-gradient(to right, #e9c5e9, #d685df);
 }
-
+#termsdiv{
+  display: none;
+}
 .loginbtn {
   background-color: #d685df;
   border: none;
@@ -258,16 +260,7 @@ form {
   font-weight: 500;
 }
 
-.editbtn {
-  width: 25%;
-  background-color: #d685df;
-  border: none;
-  padding: 3px 3px 3px 3px;
-  color: white;
-  border-radius: 3px;
-  font-size: 17px;
-  font-weight: 500;
-}
+
 
 .editbtn1 {
   width: 40%;
@@ -500,23 +493,45 @@ main {
 }
 
 .resetpasswordbody {
-  font-family: Arial, sans-serif;
-  background-color: #fce4ec;
-  color: #880e4f;
+  background: linear-gradient(to left, rgb(126, 223, 126), rgb(255, 255, 255));
+  /* From green to white */
   display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
-  margin: 0;
 }
 
-.resetpasswordcontainer {
-  background-color: #ffffff;
-  padding: 20px;
-  border-radius: 8px;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-  width: 300px;
-  text-align: center;
+.divbgimg {
+  background-image: url('./images/freepik_br_e7fc9cb6-9a78-45a0-9bb6-145be62f2cb8.png');
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+  width: 750px;
+  height: 700px;
+  margin-left: 3%;
+}
+
+.resetformdiv {
+  margin-top: 10%;
+  margin-left: 15%;
+}
+
+.reset-password-form {
+  background-color: rgb(224, 236, 224);
+  border: 5px double rgba(18, 38, 18, 0.499);
+  padding: 7px;
+  border-radius: 20px;
+
+
+}
+
+.resetformtext1 {
+  color: rgb(40, 187, 40);
+
+}
+
+.resetformtext {
+  color: rgb(40, 187, 40);
+  font-size: 20px;
+  font-weight: 500;
+  margin: 10px 0px 10px 0px;
 }
 
 h1 {
@@ -534,12 +549,12 @@ label {
   width: 100%;
   padding: 10px;
   margin-bottom: 15px;
-  border: 1px solid #d81b60;
+  border: 1px solid rgb(40, 187, 40);
   border-radius: 4px;
 }
 
 .resetpasswordBtn {
-  background-color: #d81b60;
+  background-color: rgb(40, 187, 40);
   color: white;
   padding: 10px;
   border: none;
@@ -549,41 +564,43 @@ label {
 }
 
 .resetpasswordBtn:hover {
-  background-color: #c2185b;
+  background-color: #c12929;
 }
 
-#indexnoneform {
-  width: 100%;
-  margin: auto;
-  /* background-color: white; */
+
+.verification-body {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  font-family: Arial, sans-serif;
+}
+
+.form-container {
+  box-shadow: 0 4px 20px rgba(6, 6, 6, 0.2); /* Soft shadow for depth */
   padding: 20px;
-  border-radius: 5px;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  background-color: #ffffff; /* White background for the form */
+  border-radius: 8px; /* Rounded corners */
 }
-#forgotemail{
-  width: 100%;
-  color: black;
-margin-bottom: 7px;}
-.forgotbtn{
-  background: #9e54bd;
+
+.verifybtn{
+  background-color: #d685df;
   border: none;
+  padding: 3px 6px 5px 6px;
   color: white;
-  margin-left: 3%;
-  border-radius: 5px;
-  padding-left: 3px;
-  padding-right: 3px;
-  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+  border-radius: 3px;
+  font-size: 17px;
+  font-weight: 500;
 }
-.forgotbtn{
-  background: #9e54bd;
-  border: none;
-  color: white;
-  margin-left: 3%;
-  border-radius: 5px;
-  padding-left: 3px;
-  padding-right: 3px;
-  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+.form-title{
+  color: #d685df;
 }
+
+p {
+  color: #555; /* Text color for instructions */
+  margin-bottom: 20px;
+}
+
 
 
 

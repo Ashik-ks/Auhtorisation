@@ -1,6 +1,7 @@
 
 async function login(event) {
     event.preventDefault();
+    console.log("login btn clicked...")
     let email = document.getElementById('emaillogin').value;
     console.log("email : ", email);
 
@@ -138,6 +139,15 @@ async function getusers() {
 
     admindatacontainer.innerHTML = rows;
 
+}
+
+function terms() {
+    let termsDiv = document.getElementById('termsdiv');
+    if (termsDiv.style.display === "none" || termsDiv.style.display === "") {
+        termsDiv.style.display = "block";
+    } else {
+        termsDiv.style.display = "none";
+    }
 }
 
 async function AddUser(event) {
@@ -855,7 +865,7 @@ function passtoken1() {
     let urlParams = new URLSearchParams(querystring);
     console.log("url", urlParams);
 
-    let tokenkey = urlParams.get('login');
+    let tokenkey = urlParams.get('loginid');
     console.log("tokenkeysingle : ", tokenkey)
 
     let id = urlParams.get('id');
@@ -948,37 +958,36 @@ async function emailverify(event) {
     event.preventDefault();
 
     let email = document.getElementById('forgotemail').value;
-    let data = {
-        email
-    }
-
+    let data = { email };
     let str_data = JSON.stringify(data);
 
     try {
         let response = await fetch('/forgot-password', {
             method: 'POST',
             headers: {
-                'Content-Type': "application/json",
+                'Content-Type': 'application/json',
             },
             body: str_data,
-        })
-        console.log("response : ", response);
+        });
 
-        let parsed_response = await response.json();
-        console.log("parsed_response : ", parsed_response);
-
-        if (parsed_response) {
-            alert("Verification mail send to your email");
-            return;
-        } else {
-            alert("user not added");
-            return;
+        if (!response.ok) {
+            throw new Error('Network response was not ok ' + response.statusText);
         }
 
+        let parsed_response = await response.json();
+        console.log("parsed_response: ", parsed_response);
+
+        if (parsed_response.success) {
+            alert("Verification email sent to your email address.");
+        } else {
+            alert("User not found or email already verified.");
+        }
     } catch (error) {
-        console.log("error : ", error)
+        console.error("Error: ", error);
+        alert("An error occurred while sending the verification email. Please try again later.");
     }
 }
+
 
 async function forgotpassword(event) {
     event.preventDefault();

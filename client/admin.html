@@ -22,7 +22,7 @@
             <ul>
                 <li>Dashboard</li>
                 <li class="active"><button id="fetchvalue1" onclick="filter('')">Users</button></li>
-                <li><button id="fetchvalue2" onclick="filter('Admin')">Admin</button></li>
+                <li><button class="border-0 bg-transparent text-light fs-6" onclick="passtoken()">Add Users</button></li>
                 <li><button id="fetchvalue3" onclick="filter('Employee')">Employee</button></li>
                 <li>
                     <button class="settings border-0" type="button" data-bs-toggle="offcanvas"
@@ -77,7 +77,7 @@
 
             <ul class="d-flex adminul">
                 <input type="text" placeholder="Search...">
-                <button onclick="passtoken()" class="border-0 bg-transparent text-light fs-5 fw-bold">Add user</button>
+                <button onclick="passtoken()" class="border-0 bg-transparent text-light fs-5 fw-bold text-decoration-underline">Add user</button>
                 <!-- <a class="nav-link text-light text-decoration-none fs-5 fw-bold" href="./index.html">Login Page</a> -->
 
             </ul>
