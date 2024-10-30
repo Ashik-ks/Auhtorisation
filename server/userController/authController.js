@@ -6,13 +6,33 @@ const jwt = require('jsonwebtoken');
 const dotenv = require('dotenv');
 dotenv.config();
 const sendEmail = require("../utils/send-email").sendEmail;
-const resetPassword =
-    require("../utils/email-templates/resetPassword").resetPassword;
+const resetPassword =require("../utils/email-templates/resetPassword").resetPassword;
 
 
 exports.login = async function (req, res) {
     try {
         const { email, password } = req.body;
+
+        // Validate input
+        if (!email) {
+            const response = error_function({
+                success: false,
+                statuscode: 400, 
+                message: "Email is required",
+            });
+            return res.status(response.statuscode).send(response);
+            return;
+        }
+        
+        if (!password) {
+            const response = error_function({
+                success: false,
+                statuscode: 400, 
+                message: "Password is required",
+            });
+            return res.status(response.statuscode).send(response);
+        }
+
         console.log("Email: ", email);
         console.log("Password: ", password);
 
@@ -22,27 +42,26 @@ exports.login = async function (req, res) {
 
         if (!user) {
             return res.status(404).send(error_function({
-                statusCode: 404,
+                statuscode: 404,
                 message: "User not found",
             }));
         }
 
-        // Check if the user has a password token
+        // Check if the user has a password reset token
         if (user.password_token) {
             return res.status(400).send(error_function({
-                statusCode: 400,
+                statuscode: 400,
                 message: "Please reset your password using the link sent to your email.",
             }));
         }
 
         // Verify the password
-        const db_password = user.password;
-        const passwordMatch = bcrypt.compareSync(password, db_password);
+        const passwordMatch = bcrypt.compareSync(password, user.password);
         console.log("Password Match: ", passwordMatch);
 
         if (!passwordMatch) {
             return res.status(400).send(error_function({
-                statusCode: 400,
+                statuscode: 400,
                 message: "Invalid password",
             }));
         }
@@ -51,34 +70,30 @@ exports.login = async function (req, res) {
         const token = jwt.sign({ user_id: user._id }, process.env.PRIVATE_KEY, { expiresIn: "10d" });
         console.log("Token: ", token);
 
-
-
-        const response_data = {
+        const responseData = {
             token,
-            user_types: user.userType,
-            token_id: user._id,
+            userTypes: user.userType,
+            tokenId: user._id,
             loginCount: user.loginCount,
         };
-        console.log("Response Data: ", response_data);
+        console.log("Response Data: ", responseData);
 
         const response = success_function({
-            statusCode: 200,
-            data: response_data,
+            statuscode: 200,
+            data: responseData,
             message: "Login successful",
         });
 
-        res.status(response.statuscode).send(response);
+        return res.status(response.statuscode).send(response);
 
     } catch (error) {
-        console.log("Error: ", error);
-        res.status(400).send(error_function({
-            statusCode: 400,
+        console.error("Error: ", error);
+        res.status(500).send(error_function({
+            statuscode: 400,
             message: error.message || "Something went wrong",
         }));
     }
 };
-
-
 
 
 exports.passwordreset = async function (req, res) {
@@ -120,7 +135,7 @@ exports.passwordreset = async function (req, res) {
 
         // Check if the update was successful
         if (updateUser.modifiedCount > 0) {
-            
+
             // Increment login count
             user.loginCount = (user.loginCount || 0) + 1;
             await user.save();
@@ -148,9 +163,6 @@ exports.passwordreset = async function (req, res) {
         });
     }
 };
-
-
-
 
 exports.forgotPasswordController = async function (req, res) {
     try {

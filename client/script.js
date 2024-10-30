@@ -29,28 +29,33 @@ async function login(event) {
         let parsed_response = await response.json();
         console.log("parsed_response : ", parsed_response);
 
+        if (parsed_response.statuscode === 400) {
+            console.error("Error:", parsed_response.message);
+            alert(parsed_response.message);  
+        }
+
         let token_data = parsed_response.data.token;
         console.log("token_data : ", token_data);
 
-        let id = parsed_response.data.token_id;
+        let id = parsed_response.data.tokenId;
         console.log("id : ", id)
 
         let tokenkey = id;
 
         localStorage.setItem(tokenkey, token_data);
         console.log("Token stored successfully.");
+ 
+        
 
         if (parsed_response.data.loginCount === 0) {
-            // If login count is 0, redirect to reset password page
             window.location.href = `resetpassword.html?id=${id}&login=${tokenkey}`;
             return;
         } else if (parsed_response.data.loginCount >= 1) {
-            // If login count is 1 or more, check user type and redirect
-            if (parsed_response.data.user_types === 'Admin') {
+            if (parsed_response.data.userTypes === 'Admin') {
                 alert("Admin login successful");
                 window.location.href = `admin.html?id=${id}&login=${tokenkey}`;
                 return;
-            } else if (parsed_response.data.user_types === 'Employee') {
+            } else if (parsed_response.data.userTypes === 'Employee') {
                 alert("Employee login successful");
                 window.location.href = `employee.html?id=${id}&login=${tokenkey}`;
                 return;
@@ -65,7 +70,7 @@ async function login(event) {
         
 
     } catch (error) {
-        console.log("error : ,error")
+        console.log("error : ",error)
     }
 }
 
@@ -435,7 +440,6 @@ async function currentdata() {
 
     let name = document.getElementById('name');
     let email = document.getElementById('email')
-    let userType = document.getElementById('userType');
     let joiningdate = document.getElementById('joiningdate')
 
     try {
@@ -454,7 +458,6 @@ async function currentdata() {
 
         name.value = data[0].name
         email.value = data[0].email
-        userType.value = data[0].userType
         joiningdate.value = data[0].joiningdate
     } catch (error) {
         image
@@ -478,7 +481,6 @@ async function updateUser(event) {
         body = {
             name: document.getElementById('name').value,
             email: document.getElementById('email').value,
-            userType: document.getElementById('userType').value,
             joiningdate: document.getElementById('joiningdate').value
         }
     } else {
@@ -491,7 +493,6 @@ async function updateUser(event) {
                 resolve({
                     name: document.getElementById('name').value,
                     email: document.getElementById('email').value,
-                    userType: document.getElementById('userType').value,
                     joiningdate: document.getElementById('joiningdate').value,
                     image: e.target.result // DataURL of the image
                 });
@@ -542,7 +543,7 @@ async function currentdata1() {
 
     let name = document.getElementById('name');
     let email = document.getElementById('email')
-    let userType = document.getElementById('userType');
+   
     let joiningdate = document.getElementById('joiningdate')
 
     try {
@@ -561,7 +562,6 @@ async function currentdata1() {
 
         name.value = data[0].name
         email.value = data[0].email
-        userType.value = data[0].userType
         joiningdate.value = data[0].joiningdate
     } catch (error) {
         image
@@ -587,7 +587,7 @@ async function updateEmployee(event) {
         body = {
             name: document.getElementById('name').value,
             email: document.getElementById('email').value,
-            userType: document.getElementById('userType').value,
+           
             joiningdate: document.getElementById('joiningdate').value
         }
     } else {
@@ -600,7 +600,6 @@ async function updateEmployee(event) {
                 resolve({
                     name: document.getElementById('name').value,
                     email: document.getElementById('email').value,
-                    userType: document.getElementById('userType').value,
                     joiningdate: document.getElementById('joiningdate').value,
                     image: e.target.result // DataURL of the image
                 });
@@ -865,7 +864,7 @@ function passtoken1() {
     let urlParams = new URLSearchParams(querystring);
     console.log("url", urlParams);
 
-    let tokenkey = urlParams.get('loginid');
+    let tokenkey = urlParams.get('login');
     console.log("tokenkeysingle : ", tokenkey)
 
     let id = urlParams.get('id');
@@ -987,7 +986,6 @@ async function emailverify(event) {
         alert("An error occurred while sending the verification email. Please try again later.");
     }
 }
-
 
 async function forgotpassword(event) {
     event.preventDefault();

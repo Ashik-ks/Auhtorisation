@@ -16,9 +16,11 @@
 .index {
   background: linear-gradient(to right, #e9c5e9, #d685df);
 }
-#termsdiv{
+
+#termsdiv {
   display: none;
 }
+
 .loginbtn {
   background-color: #d685df;
   border: none;
@@ -493,7 +495,7 @@ main {
 }
 
 .resetpasswordbody {
-  background: linear-gradient(to left, rgb(126, 223, 126), rgb(255, 255, 255));
+  background: linear-gradient(to left, rgb(218, 134, 231), rgb(255, 255, 255));
   /* From green to white */
   display: flex;
 }
@@ -522,16 +524,35 @@ main {
 
 }
 
+.resetpasswordcontainer {
+  background-color: rgb(224, 236, 224);
+  border: 5px double rgba(18, 38, 18, 0.499);
+  padding: 20px;
+  /* Increased padding for better spacing */
+  border-radius: 20px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+  /* Added shadow for depth */
+}
+
 .resetformtext1 {
-  color: rgb(40, 187, 40);
+  color: rgb(211, 68, 227);
 
 }
 
 .resetformtext {
-  color: rgb(40, 187, 40);
+  color: rgb(211, 68, 227);
   font-size: 20px;
   font-weight: 500;
   margin: 10px 0px 10px 0px;
+}
+
+.forgetpassdiv {
+  width: 40%; /* Adjust as needed */
+  padding: 5px;
+  margin-bottom: 15px;
+  border: 1px solid rgb(228, 108, 222);
+  border-radius: 4px;
+  font-size: 16px;
 }
 
 h1 {
@@ -554,17 +575,34 @@ label {
 }
 
 .resetpasswordBtn {
-  background-color: rgb(40, 187, 40);
+  background-color: rgb(233, 113, 239);
   color: white;
-  padding: 10px;
+padding: 2px;
   border: none;
   border-radius: 4px;
   cursor: pointer;
-  width: 100%;
+  width: 40%;
+}
+.forgetpasswordBtn{
+  background-color: rgb(233, 113, 239);
+  color: white;
+padding: 2px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  width: 20%;
 }
 
 .resetpasswordBtn:hover {
-  background-color: #c12929;
+  background-color: #c24444;
+}
+
+.forgetpasswordcontainer {
+  margin-top: 10%;
+}
+
+.forgetpasswordbody {
+  background: linear-gradient(to right, rgb(218, 134, 231), rgb(255, 255, 255));
 }
 
 
@@ -577,13 +615,16 @@ label {
 }
 
 .form-container {
-  box-shadow: 0 4px 20px rgba(6, 6, 6, 0.2); /* Soft shadow for depth */
+  box-shadow: 0 4px 20px rgba(6, 6, 6, 0.2);
+  /* Soft shadow for depth */
   padding: 20px;
-  background-color: #ffffff; /* White background for the form */
-  border-radius: 8px; /* Rounded corners */
+  background-color: #ffffff;
+  /* White background for the form */
+  border-radius: 8px;
+  /* Rounded corners */
 }
 
-.verifybtn{
+.verifybtn {
   background-color: #d685df;
   border: none;
   padding: 3px 6px 5px 6px;
@@ -592,12 +633,18 @@ label {
   font-size: 17px;
   font-weight: 500;
 }
-.form-title{
+
+.form-title {
   color: #d685df;
 }
 
+.footer {
+  padding-top: 2%;
+}
+
 p {
-  color: #555; /* Text color for instructions */
+  color: #555;
+  /* Text color for instructions */
   margin-bottom: 20px;
 }
 

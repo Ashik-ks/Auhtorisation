@@ -84,7 +84,7 @@ exports.accessControl = async function (access_types,req,res,next) {
 
         let response = error_function({
             statusCode: 400,
-            message: "Invalid password",
+            message: "error",
         });
 
         res.status(response.statuscode).send(response);
